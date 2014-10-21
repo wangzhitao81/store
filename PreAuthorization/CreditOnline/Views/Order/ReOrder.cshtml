@@ -1,0 +1,352 @@
+﻿@model CRModel.Models.OrderModel
+@using CRModel.Models;
+@{
+    ViewBag.Title = "ReOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string selectedType = ViewBag.SelectedReportType;
+    string creditno = ViewBag.CreditNo;
+}
+<div class="jumbotron-header">
+    <span style="font-size:30px; color: #34A387">@Resources.Resources.ReOrder</span>
+</div>
+<div class="container body-content">
+    @using (Html.BeginForm("ReOrder", "Order", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "reorderform" }))
+    {
+        @Html.HiddenFor(m => m.HiddenDefaultLanguage)
+        @Html.Hidden("HiddenSelectedLanguage")
+        @Html.HiddenFor(m => m.CustomerProfileNO)
+        @Html.Hidden("creditnoforredirect", creditno)
+        @Html.HiddenFor(m => m.DeliverDate)
+        @Html.HiddenFor(m => m.Fee)
+        <div class="form-group">
+            <label class="col-sm-2 control-label">@Resources.Resources.CustomReportNO</label>
+            <div class="col-sm-10">
+                @Html.TextBoxFor(m => m.CustomerReportNO, new { @class = "form-control", placeholder = Resources.Resources.CustomReportNO })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">@Resources.Resources.RegisterNO</label>
+            <div class="col-sm-10">
+                @Html.TextBoxFor(m => m.RegisterNo, new { @class = "form-control", placeholder = Resources.Resources.RegisterNO, @readonly = true })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">@Resources.Resources.EnterpriseName</label>
+            <div class="col-sm-10">
+                @Html.TextBoxFor(m => m.EnterpriseSuppliedName, new { @class = "form-control", placeholder = Resources.Resources.EnterpriseName, @readonly = true })
+                @Html.ValidationMessageFor(m => m.EnterpriseSuppliedName, Resources.Resources.InputEnterpriseName)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">@Resources.Resources.SupplyAddress</label>
+            <div class="col-sm-10">
+                @Html.TextBoxFor(m => m.SuppliedAddress, new { @class = "form-control", placeholder = Resources.Resources.SupplyAddress, @readonly = true })
+                @Html.ValidationMessageFor(m => m.SuppliedAddress, Resources.Resources.InputSupplyAddress)
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="NationCode" class="col-sm-2 control-label">@Resources.Resources.Nation</label>
+            @{
+        List<SelectListItem> items = new List<SelectListItem>();
+        foreach (string temp in (IEnumerable<string>)ViewBag.NationCodeDic.Keys)
+        {
+            if (temp == "中国")
+            {
+                items.Add(new SelectListItem() { Text = temp, Value = ViewBag.NationCodeDic[temp], Selected = true });
+            }
+            else
+            {
+                items.Add(new SelectListItem() { Text = temp, Value = ViewBag.NationCodeDic[temp] });
+            }
+        }
+            }
+            <div class="col-sm-10">
+                @Html.DropDownListFor(m => m.NationCode, (IEnumerable<SelectListItem>)items, new { @class = "form-control", placeholder = Resources.Resources.Nation, onclick = "InitReportStatus();", @readonly = true })
+                @Html.ValidationMessageFor(m => m.NationCode, Resources.Resources.InputNation)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">@Resources.Resources.ReportType</label>
+            <div class="col-sm-10">
+                @foreach (var dic in ViewBag.ReportTypeDic)
+                {
+                    <label class="radio-inline">
+                        <input name="ReportType" type="radio" value="@dic.Code" onclick="SetReportTypeValue('@dic.Name');" />
+                        @dic.Name
+                    </label>
+                }
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">@Resources.Resources.IsUrgent</label>
+            <div class="col-sm-10">
+                @foreach (var dic in ViewBag.ExpressTypeDic)
+                {
+                    <label class="radio-inline">
+                        <input name="ExpressType" type="radio" value="@dic.Code" displayname="@dic.Name" onclick="SetExpressTypeValue('@dic.Code');" />
+                        @dic.Name
+                    </label>
+                }
+            </div>
+        </div>
+        @*<div class="form-group">
+                <label class="col-sm-2 control-label">是否需要走访</label>
+                <div class="col-sm-10">
+                    <label class="checkbox">
+                        @Html.CheckBoxFor(m => m.NeedInterview)
+                    </label>
+                </div>
+            </div>*@
+        <div class="form-group">
+            <label class="col-sm-2 control-label">@Resources.Resources.TranslationLang</label>
+            <div class="col-sm-10">
+                @foreach (var dic in ViewBag.LanguageDic)
+                {
+                    <label class="checkbox-inline">
+                        <input name="TranslationLanguage" type="checkbox" value="@dic.Code" displayname="@dic.Name" onclick="SetTranslationLanguage(this,'@dic.Name')" />
+                        @dic.Name
+                    </label>
+                }
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">@Resources.Resources.Remark</label>
+            <div class="col-sm-10">
+                @Html.TextAreaFor(m => m.Remarks, new { @class = "form-control", rows = "3" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-1">
+                <input type="button" onclick="SubmitReOrderform();" class="btn btn-default" value='@Resources.Resources.Deal' />
+            </div>
+        </div>
+    }
+</div>
+<script type="text/javascript">
+    var LanguageShowList = [];
+    var LanguageShowValue = [];
+    var ReportViewType = "";
+    var UserContract = "";
+    var DeliverData = "";
+
+    $(document).ready(function () {
+        $.ajax({
+            url: '@Url.Action("GetUserContract", "Order")',
+            type: "POST",
+            dataType: "json",
+            async: false,
+            data: { username: $("#inputUserName").val() },
+            success: function (data) {
+                UserContract = data;
+            },
+            error: function (date) {
+                alert('@Resources.Resources.GetContractErrorMsg');
+                window.location.href = '@Url.Action("Index","Home")';
+            }
+        });
+        InitReportStatus(UserContract);
+    });
+
+    function GetDeliverDataandFee() {
+        $.ajax({
+            url: '@Url.Action("GetDataandFee", "Order")',
+            type: "GET",
+            dataType: "json",
+            cache: false,
+            async: false,
+            data: {
+                nationcode: $("#NationCode").val(),
+                expresstype: $("[name=ExpressType]").val(),
+                reporttype: $('input[type=radio]').serializeArray()[0].value,
+                selectedlang: LanguageShowValue.toString()
+            },
+            success: function (data) {
+                DeliverData = data;
+                $("#DeliverDate").val(data[0]);
+                $("#Fee").val(data[1]);
+                $("#spanDeliverDate_v").html(data[0]);
+                $("#spanFee_v").html(data[1]);
+            },
+            error: function (date) {
+                alert('@Resources.Resources.GetContractErrorMsg');
+                return false;
+            }
+        });
+    }
+
+    function InitReportStatus(contractdata) {
+        if (!contractdata) {
+            contractdata = UserContract;
+        }
+        var defaultlanguage = contractdata.ContractDetails[0].DefaultLanguage;
+        var tempContractDetail = $(contractdata.ContractDetails).filter(function (index) {
+            return contractdata.ContractDetails[index].NationCode == $("#NationCode").val();
+        });
+        var defaultlanguage = tempContractDetail[0].DefaultLanguage;
+        DisableNotUseReportType(tempContractDetail);
+        $("#HiddenDefaultLanguage").val(defaultlanguage);
+        $("#CustomerProfileNO").val(UserContract.CustomerProfileNO);
+        $("#reorderform").find('[name="ExpressType"][value="Common"]').click();
+
+        var str2 = "[name=\"ReportType\"][value=\"" + '@selectedType' + "\"]";
+        $("#reorderform").find(str2).click();
+        var relangArray = defaultlanguage.split(',');
+        $(relangArray).each(function (key, value) {
+            var str1 = "[name=\"TranslationLanguage\"][value=\"" + relangArray[key] + "\"]";
+            $("#reorderform").find(str1).click();
+            $("#reorderform").find(str1).attr('disabled', true);
+        });
+    }
+
+    function DisableNotUseReportType(usedContractDetails) {
+        var reporttype = [];
+        var reporttypeArray = "";
+        $(usedContractDetails).each(function (key, value) {
+            if ($.inArray(value.ReportType, reporttype) == -1) {
+                reporttype.push(value.ReportType);
+            }
+        });
+        $("[name='ReportType']").each(function (key, value) {
+            $("[value='" + value.value + "']").attr('disabled', true);
+        });
+        var temp = "[name=\"ReportType\"][value=\"" + '@selectedType' + "\"]";
+        $("#reorderform").find(temp).attr('disabled', false);
+    }
+
+    function SetReportTypeValue(value) {
+        ReportViewType = value;
+    }
+
+    function SetExpressTypeValue(value) {
+        $("[name=ExpressType]").val(value);
+    }
+
+    function SetTranslationLanguage(obj, value) {
+        $("[name=TranslationLanguage]").each(function (key, value) {
+            if (document.getElementsByName('TranslationLanguage')[key].checked) {
+                if ($.inArray($(value).attr('displayname'), LanguageShowList) == -1) {
+                    LanguageShowList.push($(value).attr('displayname'));
+                }
+                if ($.inArray($(value).attr('value'), LanguageShowValue) == -1) {
+                    LanguageShowValue.push($(value).attr('value'));
+                }
+            }
+            else {
+                LanguageShowList = $(LanguageShowList).removeItem(LanguageShowList, $(value).attr('displayname'));
+                LanguageShowValue = $(LanguageShowValue).removeItem(LanguageShowValue, $(value).attr('value'));
+            }
+        });
+    }
+
+    function SubmitReOrderform() {
+        if ($("#reorderform").valid()) {
+            CollectionData();
+            $("#MyPopUpModal").modal('toggle');
+        }
+    }
+
+    function CollectionData() {
+        $("#spanCustomerReportNO_v").html($("#CustomerReportNO").val());
+        $("#spanRegisterNo_v").html($("#RegisterNo").val());
+        //$("#spanEnterpriseSuppliedName_v").html($("#EnterpriseSuppliedName").val());
+        $("#spanENName_v").html($("#EnterpriseSuppliedName").val());
+        $("#spanSuppliedAddress_v").html($("#SuppliedAddress").val());
+        $("#spanReportType_v").html(ReportViewType);
+        var expresstype = $("[name=ExpressType]").val();
+        switch (expresstype) {
+            case "Common":
+                expresstype = "普通件";
+                break;
+            case "Urgent":
+                expresstype = "加急件";
+                break;
+            case "Express":
+                expresstype = "特急件";
+                break;
+        }
+        $("#spanExpressType_v").html(expresstype.toString());
+        //var interview = $("#NeedInterview").val();
+        //if (interview == "True" || interview == "true" || interview == true) {
+        //    interview = "需要";
+        //}
+        //else {
+        //    interview = "不需要";
+        //}
+        //$("#spanNeedInterview_v").html(interview.toString());
+        $("#spanTranslationLanguage_v").html(LanguageShowList.toString());
+        $("#spanRemarks_v").html($("#Remarks").val());
+        var templang = "";
+        $("[name=TranslationLanguage]").each(function (key, value) {
+            if (document.getElementsByName('TranslationLanguage')[key].checked) {
+                templang = templang + $(value).val() + ",";
+            }
+        });
+        templang = templang.substring(0, templang.length - 1);
+        $("#HiddenSelectedLanguage").val(templang);
+        GetDeliverDataandFee();
+    }
+
+    var reIsClicked = false;
+    function ReRealSubmit() {
+        if (!reIsClicked) {
+            $('#reorderform').submit();
+        }
+        reIsClicked = true;
+    }
+</script>
+
+<div class="modal fade" id="MyPopUpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-4" id="spanCustomerReportNO">@Resources.Resources.CustomReportNO : </div>
+                    <div class="col-sm-8" id="spanCustomerReportNO_v"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4" id="spanRegisterNo">@Resources.Resources.RegisterNO : </div>
+                    <div class="col-sm-8" id="spanRegisterNo_v"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4" id="spanENName">@Resources.Resources.EnterpriseName : </div>
+                    <div class="col-sm-8" id="spanENName_v"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4" id="spanSuppliedAddress">@Resources.Resources.SupplyAddress : </div>
+                    <div class="col-sm-8" id="spanSuppliedAddress_v"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4" id="spanReportType">@Resources.Resources.ReportType : </div>
+                    <div class="col-sm-8" id="spanReportType_v"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4" id="spanExpressType">@Resources.Resources.IsUrgent : </div>
+                    <div class="col-sm-8" id="spanExpressType_v"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4" id="spanTranslationLanguage">@Resources.Resources.TranslationLang : </div>
+                    <div class="col-sm-8" id="spanTranslationLanguage_v"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4" id="spanDeliverDate">@Resources.Resources.EstimateTime : </div>
+                    <div class="col-sm-8" id="spanDeliverDate_v">2014-06-11</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4" id="spanFee">@Resources.Resources.Fee : </div>
+                    <div class="col-sm-8" id="spanFee_v">3000.00</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4" id="spanRemarks">@Resources.Resources.Remark : </div>
+                    <div class="col-sm-8" id="spanRemarks_v"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">@Resources.Resources.Return</button>
+                <button type="button" onclick="ReRealSubmit();" class="btn btn-primary">@Resources.Resources.Deal</button>
+            </div>
+        </div>
+    </div>
+</div>

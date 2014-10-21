@@ -1,0 +1,117 @@
+﻿@{
+    ViewBag.Title = "PagedTest1";
+    Layout = "~/Views/Shared/_ContentLayout.cshtml";
+}
+<link href="/Content/PagedList.css" type="text/css" rel="Stylesheet" />
+<script type="text/javascript" src="~/Scripts/jquery-1.11.0.js"></script>
+
+@model IPagedList<PreAuthMvc.Models.RoleViewModel >
+@using PagedList;
+@using PagedList.Mvc;
+
+    <div id="resultDiv">
+        <div class="list_header">
+            功能管理
+            <div class="top_m_l"></div>
+            <div class="top_m_r"></div>
+        </div>
+        <!-- 错误信息提示div -->
+        <div class="listError dn" id="_uniformErrTip"></div>
+        <!-- 成功信息提示div -->
+        <div class="listSuccess dn" id="_uniformSuccTip"></div>
+        <table cellspacing="0" cellpadding="0" width="100%" border="0" class="t-list">
+            <tbody>
+                <tr>
+                    <th>
+                        操作
+                    </th>
+                    <th>
+                        编码
+                    </th>
+                    <th>
+                        名称
+                    </th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <input type="hidden" name="mainSeqId" value=6465 />
+                            <input type="hidden" name="usrId" value=6389 />
+                            <input type="hidden" name="usrLoginNm" value=admin />
+                            <input type="hidden" name="userPhone" value= />
+                            <a href="javascript: void(0);" name="qDelBtn" sendparam="mainSeqId,usrId" class="uline single">删除</a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RoleCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RoleName)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="page">
+            <div class="pgtotal">
+                共<em>2</em>条记录;
+            </div>
+            <div class="pgtotal">
+                总共<em>1</em>页
+            </div>
+            <span>
+                跳转至第 <input type="text" id="goPageNo" name="goPageNo" style="width:35px;height: 25px;" onkeyup='this.value=this.value.replace(/[^0-9]\D*$/,"")' autocomplete="off" />
+                页 <input type="image" id="goBtn" name="goBtn" src="~/omer/resources/zh_cn/images/btn_page.gif">
+            </span>
+            <span id="pgbtn"></span>
+            <div class="clear"></div>
+            <input type="hidden" id="pageNo" name="pageNo" value=@ViewData["pageNo"] />
+            <input type="hidden" id="totalRecords" name="totalRecords" value=@ViewData["totalRecords"] />
+            <input type="hidden" id="totalPages" name="totalPages" value=@ViewData["totalPages"] />
+        </div>
+
+        <div class="btn_line">
+            <input type="button" class="btn_blue" id="addUserBtn" value="添加角色" onclick="Add();">
+        </div>
+    </div>
+<script type="text/javascript">
+    upms.grid.gridhover(".t-list");
+    upms.pagequery.initpaging({// 分页
+        pgbtnid:"pgbtn",
+        resultdivid:"resultDiv",
+        url: '@Url.Action("PagedTest1", "Test")',
+        opertype:"requery"
+    });
+    upms.handlebtn.forward({// 添加按钮
+        btnid:"addUserBtn",
+        url: '@Url.Action("Add", "Test")'
+    });
+    upms.griddialog.execute({// 删除操作
+        btnname:"qDelBtn",
+        url: '@Url.Action("Del", "Test")',
+        dialogtitle:"信息提示",
+        dialogtip:"你确认要删除该记录吗?",
+        errinfoid:"_uniformErrTip",
+        errinfotip:"删除操作失败!",
+        succinfoid:"_uniformSuccTip",
+        succinfotip:"删除操作成功!"
+    });
+    //upms.griddialog.execute({// 解锁操作
+    //    btnname:"qUnlockBtn",
+    //    url:"/omer/SITEMNG/users!unlock.action",
+    //    dialogtitle:"信息提示",
+    //    dialogtip:"你确认要进行解锁吗?",
+    //    errinfoid:"_uniformErrTip",
+    //    errinfotip:"解锁操作失败!",
+    //    succinfoid:"_uniformSuccTip",
+    //    succinfotip:"解锁操作成功!"
+    //});
+    upms.forward.execute({// 修改操作
+        url: "~/omer/SITEMNG/users!modifyUserInit.action",
+        btnname:"qModifyBtn"
+    });
+    //upms.forward.execute({// 修改手机号
+    //    url:"/omer/SITEMNG/users!editMPhoneInit.action",
+    //    btnname:"qEditPhoneBtn"
+    //});
+</script>

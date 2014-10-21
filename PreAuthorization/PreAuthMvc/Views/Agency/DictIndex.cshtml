@@ -1,0 +1,114 @@
+﻿@model IList<PreAuthMvc.Models.DictItemViewModel>
+@{
+    ViewBag.Title = "DictIndex";
+    Layout = "~/Views/Shared/_ContentLayout.cshtml";
+}
+<div id="resultDiv">
+    <div class="list_header">
+        字典管理
+        <div class="top_m_l"></div>
+        <div class="top_m_r"></div>
+    </div>
+    <!-- 错误信息提示div -->
+    <div class="listError dn" id="_uniformErrTip"></div>
+    <!-- 成功信息提示div -->
+    <div class="listSuccess dn" id="_uniformSuccTip"></div>
+    <table cellspacing="0" cellpadding="0" width="100%" border="0" class="t-list">
+        <tbody>
+            <tr>
+                <th>
+                    操作
+                </th>
+                <th>
+                    编码
+                </th>
+                <th>
+                    名称
+                </th>
+                <th>
+                    类型
+                </th>
+                <th>
+                    父级名称
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="hidden" name="recordId" value='@item.Id' />
+                        <input type="hidden" name="usrId" value='@ViewData["usrId"]' />
+                        <input type="hidden" name="usrLoginNm" value='@ViewData["usrLoginNm"]' />
+                        <a href="javascript: void(0);" name="qDelBtn" sendparam="recordId,usrId" class="uline single">删除</a>
+                        <a href="javascript: void(0);" name="qModifyBtn" sendparam="recordId,usrId" class="uline single">修改</a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ItemCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ItemName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ItemType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ParentName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Remark)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="page">
+        <div class="pgtotal">
+            共<em>@ViewData["totalRecords"]</em>条记录;
+        </div>
+        <div class="pgtotal">
+            总共<em>@ViewData["totalPages"]</em>页
+        </div>
+        <span>
+            跳转至第 <input type="text" id="goPageNo" name="goPageNo" style="width:35px;height: 25px;" onkeyup='this.value=this.value.replace(/[^0-9]\D*$/,"")' autocomplete="off" />
+            页 <input type="image" id="goBtn" name="goBtn" src="~/omer/resources/zh_cn/images/btn_page.gif">
+        </span>
+        <span id="pgbtn"></span>
+        <div class="clear"></div>
+        <input type="hidden" id="pageNo" name="pageNo" value=@ViewData["pageNo"] />
+        <input type="hidden" id="totalRecords" name="totalRecords" value=@ViewData["totalRecords"] />
+        <input type="hidden" id="totalPages" name="totalPages" value=@ViewData["totalPages"] />
+    </div>
+
+    <div class="btn_line">
+        <input type="button" class="btn_blue" id="qAddBtn" value="添加字典">
+    </div>
+</div>
+<script type="text/javascript">
+    upms.grid.gridhover(".t-list");
+    upms.pagequery.initpaging({// 分页
+        pgbtnid: "pgbtn",
+        resultdivid: "resultDiv",
+        url: '@Url.Action("DictIndex", "Agency")',
+        opertype: "requery"
+    });
+    upms.handlebtn.forward({// 添加按钮
+        btnid: "qAddBtn",
+        url: '@Url.Action("DictAdd", "Agency")'
+    });
+    upms.griddialog.execute({// 删除操作
+        btnname: "qDelBtn",
+        url: '@Url.Action("DictDel", "Agency")',
+        dialogtitle: "信息提示",
+        dialogtip: "你确认要删除该记录吗?",
+        errinfoid: "_uniformErrTip",
+        errinfotip: "删除操作失败!",
+        succinfoid: "_uniformSuccTip",
+        succinfotip: "删除操作成功!"
+    });
+    upms.forward.execute({// 修改操作
+        url: '@Url.Action("DictModify", "Agency")',
+        btnname: "qModifyBtn"
+    });
+</script>
+

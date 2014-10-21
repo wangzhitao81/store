@@ -1,0 +1,46 @@
+﻿@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a id="UserDisplayName"></a>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">@Resources.Resources.UserCenter <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li class="divider"></li>
+                    <li><a href='@Url.Action("Index", "ReportDetails")'>@Resources.Resources.CompletedReport</a></li>
+                    <li><a href='@Url.Action("EditPassword", "Account")'>@Resources.Resources.EditPassword</a></li>
+                    <li class="divider"></li>
+                </ul>
+            </li>
+            <li>
+                <a href="javascript:document.getElementById('logoutForm').submit()">@Resources.Resources.Logoff</a>
+            </li>
+        </ul>
+    }
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajax({
+                url: '@Url.Action("GetUserDisplayName", "Home")',
+                type: "GET",
+                dataType: "text",
+                async: false,
+                cache: false,
+                success: function (data) {
+                    $("#UserDisplayName").text('@Resources.Resources.Welcome' + " " + data);
+                },
+                error: function (date) {
+                    $("#UserDisplayName").text('@Resources.Resources.Welcome' + " " + '@HttpContext.Current.User.Identity.Name');
+                }
+            });
+        });
+    </script>
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="#" id="loginLink" data-toggle="modal" data-target="#loginModal">@Resources.Resources.Login</a></li>
+    </ul>
+}

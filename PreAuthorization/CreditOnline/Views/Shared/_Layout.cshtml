@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title - Crediteyes</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/modernizr-2.7.2.js"></script>
+    <script src="~/Scripts/respond.js"></script>
+    <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-ui-1.10.4.js"></script>
+    <link href="~/Content/jquery.jqGrid/ui.jqgrid.css" rel="stylesheet" />
+    @{
+        if (System.Threading.Thread.CurrentThread.CurrentUICulture.LCID == 1033)
+        {
+            <script src="~/Scripts/i18n/grid.locale-en.js"></script>
+            <script src="~/Scripts/jqueryui_i18n/jquery.ui.datepicker-en-AU.js"></script>
+        }
+        else
+        {
+            <script src="~/Scripts/i18n/grid.locale-cn.js"></script>
+            <script src="~/Scripts/jqueryui_i18n/jquery.ui.datepicker-zh-CN.js"></script>
+        }
+    }
+    <script src="~/Scripts/jquery.jqGrid.src.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Crediteyes Online", "Index", "Home", null, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    @if (Request.IsAuthenticated)
+                    {
+                        <li><a href="@Url.Action("Index", "ReportDetails")">@Resources.Resources.ReportDetailTitle</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">@Resources.Resources.Investigation<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="@Url.Action("NewOrder", "Order")">@Resources.Resources.NewOrderTitle</a></li>
+                                <li><a href="@Url.Action("MultiOrder", "Order")">@Resources.Resources.MultiOrder</a></li>
+                            </ul>
+                        </li>
+                        string currentuser = HttpContext.Current.User.Identity.Name;
+                        if (currentuser == "ReportCheck_001")
+                        {
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">邮件订单<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="@Url.Action("Index", "EmailOrderDetails")">邮件订单错误查询</a></li>
+                                    <li><a href="@Url.Action("CPWPIndex", "EmailOrderDetails")">CPWP同步错误查询</a></li>
+                                </ul>
+                            </li>
+                        }
+                    }
+                </ul>
+
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div>
+        @RenderBody()
+        <hr />
+        @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { id = "submitForm", Class = "form-horizontal", role = "form" }))
+        {
+            <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">@Resources.Resources.Login</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <img src='@Url.Content("~/Content/images/icon_login.png")' alt="" />
+                                </div>
+                                <div class="col-lg-9">
+                                    <div class="form-group" id="errormsg" style="display:none;">
+                                        <span style="height: 20px; color: #b94a48; margin-left: 130px; font-size: 12px; padding-bottom: -15px;">@Resources.Resources.UsernameorPasswordInvalid</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputUserName" class="col-sm-3 control-label">@Resources.Resources.UserName</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" data-val="true" data-val-required="" id="inputUserName" name="UserName" placeholder='@Resources.Resources.UserName' type="text" value="" onkeydown="FormOnkeydown();">
+                                            <span class="field-validation-valid" data-valmsg-for="UserName" data-valmsg-replace="false" style="font-size:12px;">@Resources.Resources.InputUserName</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputPassword" class="col-sm-3 control-label">@Resources.Resources.Password</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" data-val="true" data-val-required="" id="inputPassword" name="Password" placeholder='@Resources.Resources.Password' type="password" value="" onkeydown="FormOnkeydown();">
+                                            <span class="field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="false" style="font-size:12px;">@Resources.Resources.InputPassword</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="submitbtn" type="button" class="btn btn-primary" onclick="LoginClick();">@Resources.Resources.Submit</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">@Resources.Resources.Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="navbar navbar-default navbar-fixed-bottom" style="min-height: 20px !important; max-height:30px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <span style="color: #C3C0B9">&copy; @DateTime.Now.Year - Crediteyes</span>
+                </div>
+                <div class="col-md-8">
+                    <a href='@Url.Action("SetCulture", "Home", new { culture = "en-us" })' style="float: right; padding-right: 15px;">
+                        English
+                    </a>
+                    <a href='@Url.Action("SetCulture", "Home", new { culture = "zh-CN" })' style="float: right; padding-right: 15px;">
+                        中文
+                    </a>
+
+                    <span style="float: right; padding-right: 15px;">@Html.ActionLink(Resources.Resources.About, "About", "Home", new { style = "color: #C3C0B9" })</span>
+                    <span style="float: right; padding-right: 15px;">@Html.ActionLink(Resources.Resources.ContactMethod, "Contact", "Home", new { style = "color: #C3C0B9" })</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function FormOnkeydown() {
+            if (event.keyCode == 13) {
+                $("#submitbtn").click();
+            }
+        }
+
+        function LoginClick() {
+            if ($("#submitForm").valid()) {
+                $.ajax({
+                    url: '@Url.Action("Login", "Account")',
+                    type: "POST",
+                    dataType: "text",
+                    async: false,
+                    data: {
+                        username: $("#inputUserName").val(),
+                        password: $("#inputPassword").val(),
+                        entername: $("#inputSearch").val(),
+                        searchopt: $("[name=searchOptions]").val()
+                    },
+                    success: function (data) {
+                        if (data != "failed") {
+                            $("#errormsg").hide();
+                            window.location.href = data;@*'@Url.Action("Index","Home")';*@
+                        }
+                        else {
+                            $("#errormsg").show();
+                        }
+                    },
+                    error: function (date) {
+                    }
+                });
+            }
+        }
+
+        $.fn.removeItem = function (source, match) {
+            var len = source.length;
+            while (len--) {
+                if (len in source && source[len] === match) {
+                    source.splice(len, 1);
+                }
+            }
+            return source;
+        };
+    </script>
+</body>
+</html>

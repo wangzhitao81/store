@@ -1,0 +1,50 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Html.Partial("~/Views/PartialView/SearchArea.cshtml")
+<div class="container body-content">
+    <div id="jqgrid" style="margin-top:15px;">
+        <table id="grid"></table>
+        <div id="gridPager"></div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#grid").jqGrid({
+            url: '@Url.Action("GetSearchReportData", "Search")',
+            datatype: "json",
+            mtype: "POST",
+            height: 280,
+            autowidth: true,
+            colNames: ['@Resources.Resources.EnterpriseName', '@Resources.Resources.SupplyAddress'],
+            //colNames: ['倍通编号', '中文名称', '地址'],
+            colModel: [
+                //Name 为和后台绑定名称 Index 为requst param
+                //{ name: 'CrediteyesNO', index: 'CrediteyesNO', width: '15%', align: 'left' },
+                { name: 'ChineseName', index: 'ChineseName', width: '35%', align: 'left', formatter: CheckDetails },
+                { name: 'Address', index: 'Address', width: '25%', align: 'left' }
+            ],
+            postData: { InputStr: $("#inputSearch").val(), SearchOpt: $("input[checked='checked']").val() },
+            rownumbers: false,
+            altRows: false,
+            //sortname:'createDate',
+            //sortorder:'asc',
+            pagerpos: 'left',
+            viewrecords: false,
+            rowNum: 10,
+            rowList: [10, 15, 20],
+            jsonReader: {
+                id: "EnterpriseNo",
+                repeatitems: false
+            },
+            pager: $('#gridPager')
+        }).navGrid('#gridPager');
+        //$('#grid').jqGrid('filterToolbar', { searchOnEnter: true });
+    });
+
+    function CheckDetails(cellvalue, options, rowObject) {
+        return "<a href=\"" + '@Url.Action("Details", "Search")' + "?Id=" + rowObject.CrediteyesNO + "\"" + " style=\"text-decoration:underline; color:brown; \">" + rowObject.ChineseName + "</a>";
+    }
+</script>

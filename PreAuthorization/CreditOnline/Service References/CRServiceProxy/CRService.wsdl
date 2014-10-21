@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="CRService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:5508/CRService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:5508/CRService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:5508/CRService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/CRModel.Models" />
+      <xsd:import schemaLocation="http://localhost:5508/CRService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ICRService_IsAlive_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsAlive" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_IsAlive_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsAliveResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetDicModel_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDicModel" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetDicModel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDicModelResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_CheckUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckUser" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_CheckUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetSearchReportData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSearchReportData" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetSearchReportData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSearchReportDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_NewOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:NewOrder" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_NewOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NewOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_NewMultiOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:NewMultiOrder" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_NewMultiOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:NewMultiOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetContractDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetContractDetails" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetContractDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetContractDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetEnterpriseInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEnterpriseInfo" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetEnterpriseInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEnterpriseInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetReportDetais_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetReportDetais" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetReportDetais_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetReportDetaisResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetEmailErrorDetais_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEmailErrorDetais" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetEmailErrorDetais_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEmailErrorDetaisResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetContractNation_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetContractNation" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetContractNation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetContractNationResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_EditPassword_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditPassword" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_EditPassword_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditPasswordResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetDataandFee_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDataandFee" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetDataandFee_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDataandFeeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetContractDetailsByEmail_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetContractDetailsByEmail" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetContractDetailsByEmail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetContractDetailsByEmailResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetContractDetailsByOrg_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetContractDetailsByOrg" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetContractDetailsByOrg_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetContractDetailsByOrgResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetUnreadMsgUids_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUnreadMsgUids" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetUnreadMsgUids_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUnreadMsgUidsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_SaveEmail_InputMessage">
+    <wsdl:part name="parameters" element="tns:SaveEmail" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_SaveEmail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SaveEmailResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_CheckNeedSendEmail_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckNeedSendEmail" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_CheckNeedSendEmail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckNeedSendEmailResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_CheckUrgent_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckUrgent" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_CheckUrgent_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckUrgentResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetNationDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetNationDetails" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetNationDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetNationDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_SynctoCPWP_InputMessage">
+    <wsdl:part name="parameters" element="tns:SynctoCPWP" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_SynctoCPWP_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SynctoCPWPResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetDisplayName_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDisplayName" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetDisplayName_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDisplayNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_CheckCustomerReportNO_InputMessage">
+    <wsdl:part name="parameters" element="tns:CheckCustomerReportNO" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_CheckCustomerReportNO_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CheckCustomerReportNOResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetEmailDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetEmailDetails" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetEmailDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetEmailDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetSyncCPWPErrorDetais_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSyncCPWPErrorDetais" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetSyncCPWPErrorDetais_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSyncCPWPErrorDetaisResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetCPWPError_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCPWPError" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_GetCPWPError_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCPWPErrorResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_UpdateReportOrderStatus_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateReportOrderStatus" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_UpdateReportOrderStatus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateReportOrderStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_CompleteReportOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:CompleteReportOrder" />
+  </wsdl:message>
+  <wsdl:message name="ICRService_CompleteReportOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CompleteReportOrderResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ICRService">
+    <wsdl:operation name="IsAlive">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICRService/IsAlive" message="tns:ICRService_IsAlive_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICRService/IsAliveResponse" message="tns:ICRService_IsAlive_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDicModel">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICRService/GetDicModel" message="tns:ICRService_GetDicModel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICRService/GetDicModelResponse" message="tns:ICRService_GetDicModel_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICRService/CheckUser" message="tns:ICRService_CheckUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICRService/CheckUserResponse" message="tns:ICRService_CheckUser_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSearchReportData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICRService/GetSearchReportData" message="tns:ICRService_GetSearchReportData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICRService/GetSearchReportDataResponse" message="tns:ICRService_GetSearchReportData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NewOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICRService/NewOrder" message="tns:ICRService_NewOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICRService/NewOrderResponse" message="tns:ICRService_NewOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="NewMultiOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICRService/NewMultiOrder" message="tns:ICRService_NewMultiOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICRService/NewMultiOrderResponse" message="tns:ICRService_NewMultiOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContractDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICRService/GetContractDetails" message="tns:ICRService_GetContractDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICRService/GetContractDetailsResponse" message="tns:ICRService_GetContractDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEnterpriseInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICRService/GetEnterpriseInfo" message="tns:ICRService_GetEnterpriseInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICRService/GetEnterpriseInfoResponse" message="tns:ICRService_GetEnterpriseInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetReportDetais">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICRService/GetReportDetais" message="tns:ICRService_GetReportDetais_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICRService/GetReportDetaisResponse" message="tns:ICRService_GetReportDetais_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEmailErrorDetais">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICRService/GetEmailErrorDetais" message="tns:ICRService_GetEmailErrorDetais_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICRService/GetEmailErrorDetaisResponse" message="tns:ICRService_GetEmailErrorDetais_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContractNation">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICRService/GetContractNation" message="tns:ICRService_GetContractNation_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICRService/GetContractNationResponse" message="tns:ICRService_GetContractNation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditPassword">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICRService/EditPassword" message="tns:ICRService_EditPassword_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICRService/EditPasswordResponse" message="tns:ICRService_EditPassword_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDataandFee">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICRService/GetDataandFee" message="tns:ICRService_GetDataandFee_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICRService/GetDataandFeeResponse" message="tns:ICRService_GetDataandFee_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContractDetailsByEmail">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICRService/GetContractDetailsByEmail" message="tns:ICRService_GetContractDetailsByEmail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICRService/GetContractDetailsByEmailResponse" message="tns:ICRService_GetContractDetailsByEmail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetContractDetailsByOrg">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICRService/GetContractDetailsByOrg" message="tns:ICRService_GetContractDetailsByOrg_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICRService/GetContractDetailsByOrgResponse" message="tns:ICRService_GetContractDetailsByOrg_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUnreadMsgUids">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICRService/GetUnreadMsgUids" message="tns:ICRService_GetUnreadMsgUids_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICRService/GetUnreadMsgUidsResponse" message="tns:ICRService_GetUnreadMsgUids_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveEmail">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICRService/SaveEmail" message="tns:ICRService_SaveEmail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICRService/SaveEmailResponse" message="tns:ICRService_SaveEmail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckNeedSendEmail">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICRService/CheckNeedSendEmail" message="tns:ICRService_CheckNeedSendEmail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICRService/CheckNeedSendEmailResponse" message="tns:ICRService_CheckNeedSendEmail_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckUrgent">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICRService/CheckUrgent" message="tns:ICRService_CheckUrgent_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICRService/CheckUrgentResponse" message="tns:ICRService_CheckUrgent_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNationDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICRService/GetNationDetails" message="tns:ICRService_GetNationDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICRService/GetNationDetailsResponse" message="tns:ICRService_GetNationDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SynctoCPWP">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICRService/SynctoCPWP" message="tns:ICRService_SynctoCPWP_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICRService/SynctoCPWPResponse" message="tns:ICRService_SynctoCPWP_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDisplayName">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICRService/GetDisplayName" message="tns:ICRService_GetDisplayName_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICRService/GetDisplayNameResponse" message="tns:ICRService_GetDisplayName_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CheckCustomerReportNO">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICRService/CheckCustomerReportNO" message="tns:ICRService_CheckCustomerReportNO_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICRService/CheckCustomerReportNOResponse" message="tns:ICRService_CheckCustomerReportNO_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEmailDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICRService/GetEmailDetails" message="tns:ICRService_GetEmailDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICRService/GetEmailDetailsResponse" message="tns:ICRService_GetEmailDetails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSyncCPWPErrorDetais">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICRService/GetSyncCPWPErrorDetais" message="tns:ICRService_GetSyncCPWPErrorDetais_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICRService/GetSyncCPWPErrorDetaisResponse" message="tns:ICRService_GetSyncCPWPErrorDetais_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCPWPError">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICRService/GetCPWPError" message="tns:ICRService_GetCPWPError_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICRService/GetCPWPErrorResponse" message="tns:ICRService_GetCPWPError_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateReportOrderStatus">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICRService/UpdateReportOrderStatus" message="tns:ICRService_UpdateReportOrderStatus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICRService/UpdateReportOrderStatusResponse" message="tns:ICRService_UpdateReportOrderStatus_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CompleteReportOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICRService/CompleteReportOrder" message="tns:ICRService_CompleteReportOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICRService/CompleteReportOrderResponse" message="tns:ICRService_CompleteReportOrder_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_ICRService" type="tns:ICRService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="IsAlive">
+      <soap:operation soapAction="http://tempuri.org/ICRService/IsAlive" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDicModel">
+      <soap:operation soapAction="http://tempuri.org/ICRService/GetDicModel" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckUser">
+      <soap:operation soapAction="http://tempuri.org/ICRService/CheckUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSearchReportData">
+      <soap:operation soapAction="http://tempuri.org/ICRService/GetSearchReportData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NewOrder">
+      <soap:operation soapAction="http://tempuri.org/ICRService/NewOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="NewMultiOrder">
+      <soap:operation soapAction="http://tempuri.org/ICRService/NewMultiOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContractDetails">
+      <soap:operation soapAction="http://tempuri.org/ICRService/GetContractDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEnterpriseInfo">
+      <soap:operation soapAction="http://tempuri.org/ICRService/GetEnterpriseInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetReportDetais">
+      <soap:operation soapAction="http://tempuri.org/ICRService/GetReportDetais" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmailErrorDetais">
+      <soap:operation soapAction="http://tempuri.org/ICRService/GetEmailErrorDetais" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContractNation">
+      <soap:operation soapAction="http://tempuri.org/ICRService/GetContractNation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EditPassword">
+      <soap:operation soapAction="http://tempuri.org/ICRService/EditPassword" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDataandFee">
+      <soap:operation soapAction="http://tempuri.org/ICRService/GetDataandFee" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContractDetailsByEmail">
+      <soap:operation soapAction="http://tempuri.org/ICRService/GetContractDetailsByEmail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetContractDetailsByOrg">
+      <soap:operation soapAction="http://tempuri.org/ICRService/GetContractDetailsByOrg" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetUnreadMsgUids">
+      <soap:operation soapAction="http://tempuri.org/ICRService/GetUnreadMsgUids" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveEmail">
+      <soap:operation soapAction="http://tempuri.org/ICRService/SaveEmail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckNeedSendEmail">
+      <soap:operation soapAction="http://tempuri.org/ICRService/CheckNeedSendEmail" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckUrgent">
+      <soap:operation soapAction="http://tempuri.org/ICRService/CheckUrgent" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNationDetails">
+      <soap:operation soapAction="http://tempuri.org/ICRService/GetNationDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SynctoCPWP">
+      <soap:operation soapAction="http://tempuri.org/ICRService/SynctoCPWP" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDisplayName">
+      <soap:operation soapAction="http://tempuri.org/ICRService/GetDisplayName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CheckCustomerReportNO">
+      <soap:operation soapAction="http://tempuri.org/ICRService/CheckCustomerReportNO" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmailDetails">
+      <soap:operation soapAction="http://tempuri.org/ICRService/GetEmailDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSyncCPWPErrorDetais">
+      <soap:operation soapAction="http://tempuri.org/ICRService/GetSyncCPWPErrorDetais" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCPWPError">
+      <soap:operation soapAction="http://tempuri.org/ICRService/GetCPWPError" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateReportOrderStatus">
+      <soap:operation soapAction="http://tempuri.org/ICRService/UpdateReportOrderStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CompleteReportOrder">
+      <soap:operation soapAction="http://tempuri.org/ICRService/CompleteReportOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CRService">
+    <wsdl:port name="BasicHttpBinding_ICRService" binding="tns:BasicHttpBinding_ICRService">
+      <soap:address location="http://localhost:5508/CRService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,141 @@
+﻿@model CRModel.Models.EnterpriseInfoModel
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var dicstrmodels = ViewBag.LanguageDicString;
+}
+@Html.Partial("~/Views/PartialView/SearchArea.cshtml")
+<div class="container body-content" style="margin-top:20px;">
+    <div class="row">
+        <div class="col-sm-1">
+            <img src='@Url.Content("~/Content/images/icon_company.png")' alt="" />
+        </div>
+        <div class="col-sm-11">
+            <h5>@this.Model.CNName</h5>
+            <h5>@this.Model.ENName</h5>
+            <h5>地址： @this.Model.CNAddress</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div style="margin-left:60px;">
+            @foreach (var dic in ViewBag.ReportTypeDicWithAuth.Keys)
+            {
+                CRModel.Models.CreditReportModel mm = new CRModel.Models.CreditReportModel();
+                if (this.Model.ReportDetails.ContainsKey(dic.Code))
+                {
+                    mm = this.Model.ReportDetails[dic.Code];
+                    //old report
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="width:15%">
+                                    <div style="color: #4C81A6; font-size: 18px; font-weight: bold;">@dic.Name</div>
+                                </th>
+                                <th style="width:35%">
+                                    <a href='@Url.Action("ReOrder", "Order", new { creditno = this.Model.CrediteyesNO, selectedreporttype = dic.Code })' onclick="CheckLogin(this); return false;" class="btn btn-sm btn-default">@Resources.Resources.OrderExisting</a>
+                                    @if (ViewBag.ReportTypeDicWithAuth[dic])
+                                    {
+                                        <a href='@Url.Action("ReOrder", "Order", new { creditno = this.Model.CrediteyesNO, selectedreporttype = dic.Code })' onclick="CheckLogin(this); return false;" class="btn btn-sm btn-default">@Resources.Resources.OrderUpdate</a>
+                                    }
+                                    else
+                                    {
+                                        <a href='@Url.Action("ReOrder", "Order", new { creditno = this.Model.CrediteyesNO, selectedreporttype = dic.Code })' onclick="CheckLogin(this); return false;" class="btn btn-sm btn-default" disabled="true">@Resources.Resources.OrderUpdate</a>
+                                    }
+                                </th>
+                                <th style="width:50%"></th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="row" id='@dic.Code'>
+                        <div class="col-sm-2">@Resources.Resources.LastUpdateTime : </div>
+                        <div class="col-sm-10">@mm.LastedYear</div>
+                        <div class="col-sm-2">@Resources.Resources.FinancialYear : </div>
+                        <div class="col-sm-10">@mm.FinancialYear</div>
+                        @foreach (var langdic in ViewBag.LanguageDic)
+                        {
+                            <div class="col-sm-2">@langdic.Name @Resources.Resources.Price : </div>
+                            <div class="col-sm-10" cusid="@langdic.Code OrignalPrice">600</div>
+                            <div class="col-sm-2">@Resources.Resources.TimeDisaccount : </div>
+                            <div class="col-sm-10" cusid="@langdic.Code OrignalPriceCount">2011-11-11</div>
+                            <div class="col-sm-2">@langdic.Name @Resources.Resources.CurrentPrice : </div>
+                            <div class="col-sm-10" cusid="@langdic.Code CurrentPrice">2011-11-11</div>
+                        }
+                        <div class="col-sm-2">@Resources.Resources.CurrencyUnit : @this.Model.DefaultCurrency</div>
+                        <div class="col-sm-10">@Resources.Resources.RMB</div>
+                    </div>
+                }
+                else
+                {
+                    //new report
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="width:15%">
+                                    <div style="color: #4C81A6;font-size:18px;font-weight:bold;">@dic.Name</div>
+                                </th>
+                                <th style="width:35%">
+                                    @if (ViewBag.ReportTypeDicWithAuth[dic])
+                                    {
+                                        <a href='@Url.Action("ReOrder", "Order", new { creditno = this.Model.CrediteyesNO, selectedreporttype = dic.Code })' onclick="CheckLogin(this); return false;" class="btn btn-sm btn-default">@Resources.Resources.OrderUpdate</a>
+                                    }
+                                    else
+                                    {
+                                        <a href='@Url.Action("ReOrder", "Order", new { creditno = this.Model.CrediteyesNO, selectedreporttype = dic.Code })' onclick="CheckLogin(this); return false;" class="btn btn-sm btn-default" disabled="true">@Resources.Resources.OrderUpdate</a>
+                                    }
+                                </th>
+
+                                <th style="width:50%"></th>
+                            </tr>
+                        </thead>
+                    </table>
+                }
+            }
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    var UserContract = "";
+    var LanguageStr = "";
+    var LanguageArray = "";
+    $(document).ready(function () {
+        $.ajax({
+            url: '@Url.Action("GetUserContract", "Order")',
+            type: "POST",
+            dataType: "json",
+            async: false,
+            data: { username: "" },
+            success: function (data) {
+                LanguageStr = '@dicstrmodels';
+                LanguageArray = LanguageStr.split(',');
+                UserContract = data;
+                $(UserContract.ContractDetails).each(function (key, value) {
+                    for (var i = 0; i < LanguageArray.length; i++) {
+                        $("div[id='" + value.ReportType + "']").find("[cusid='" + LanguageArray[i] + " OrignalPriceCount']").html(300);
+                        $("div[id='" + value.ReportType + "']").find("[cusid='" + LanguageArray[i] + " CurrentPrice']").html(900);
+                        $("div[id='" + value.ReportType + "']").find("[cusid='" + LanguageArray[i] + " OrignalPrice']").html(1200);
+                    }
+                });
+            },
+            error: function (date) {
+            }
+        });
+    });
+
+    function CheckLogin(obj) {
+        $.ajax({
+            url: '@Url.Action("CheckUserLogin", "Account")',
+            type: "POST",
+            async: false,
+            success: function (data) {
+                if (data != "success") {
+                    $("#loginModal").modal('toggle');
+                }
+                else {
+                    window.location.href = obj.href;
+                }
+            },
+            error: function (date) {
+            }
+        });
+    }
+</script>

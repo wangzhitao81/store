@@ -1,0 +1,110 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="jumbotron-header">
+    <span style="font-size:30px; color: #34A387">@Resources.Resources.ReportDetailTitle</span>
+</div>
+<div class="container body-content">
+    <div class="row">
+        <div class="col-lg-1">
+            <img src='@Url.Content("~/Content/images/icon_search.png")' alt="" />
+        </div>
+        <div class="col-lg-11">
+            <span>@Resources.Resources.EnterpriseName</span>
+            <input id="enterprisename" type="text" />
+            <span>@Resources.Resources.CustomReportNO</span>
+            <input id="mCustomerReportNO" type="text" />
+            <select id="detailsdata" style="max-width:130px;margin-left:15px;">
+                <option value="0">@Resources.Resources.OrderDate</option>
+                <option value="1">@Resources.Resources.DeliverDate</option>
+            </select>
+            <span>@Resources.Resources.From：</span>
+            <input style="width:80px;" id="datepickerFrom" />
+            <span>@Resources.Resources.To：</span>
+            <input style="width:80px;" id="datepickerTo" />
+            <button id="searchdetailsbtn" type="button" class="btn btn-primary" style="width:60px;float:right;">@Resources.Resources.Search</button>
+        </div>
+    </div>
+    <div id="jqgrid" style="margin-top:3px;">
+        <table id="grid"></table>
+        <div id="gridPager"></div>
+    </div>
+</div>
+<script type="text/javascript">
+    $("#searchdetailsbtn").click(function () {
+        if ($("#datepickerFrom").val() != "" && $("#datepickerTo").val() == "") {
+            var month = '@DateTime.Now.Month.ToString()';
+            if (parseInt(month) < 10) {
+                month = "0" + '@DateTime.Now.Month.ToString()';
+            }
+            $("#datepickerTo").val('@DateTime.Now.Year.ToString()' + "-" + month + "-" + '@DateTime.Now.Day.ToString()');
+        }
+        $("#grid").jqGrid('setGridParam', {
+            postData: {
+                EnterpriseNameStr: $("#enterprisename").val(),
+                CustomerReportNOStr: $("#mCustomerReportNO").val(),
+                SearchOpt: $("#detailsdata").val(),
+                FromDate: $("#datepickerFrom").val(),
+                ToDate: $("#datepickerTo").val()
+            }
+        }).trigger("reloadGrid");
+    });
+
+    $(document).ready(function () {
+        $("#grid").jqGrid({
+            url: '@Url.Action("GetReportDetails", "ReportDetails")',
+            datatype: "json",
+            mtype: "POST",
+            height: 350,
+            autowidth: true,
+            colNames: ['@Resources.Resources.OrderNO', '@Resources.Resources.CustomReportNO', '@Resources.Resources.EnterpriseName', '@Resources.Resources.ReportType', '@Resources.Resources.ServiceType', '@Resources.Resources.TranslationLang', '@Resources.Resources.OrderDate', '@Resources.Resources.EstimateTime', '@Resources.Resources.DeliverDate', '@Resources.Resources.RealPrice', '@Resources.Resources.OrderStatus'],
+            colModel: [
+                { name: 'OrderNO', index: 'OrderNO', align: 'left', width: 160 },
+                { name: 'CustomerReportNO', index: 'CustomerReportNO', align: 'left' },
+                { name: 'EnterpriseName', index: 'EnterpriseName', align: 'left' },
+                { name: 'ReportTypeValue', index: 'ReportTypeValue', align: 'left' },
+                { name: 'DeliverType', index: 'DeliverType', align: 'left' },
+                { name: 'LanguageValue', index: 'LanguageValue', align: 'left' },
+                { name: 'OrderDate', index: 'OrderDate', align: 'left' },
+                { name: 'ScheduledDate', index: 'ScheduledDate', align: 'left' },
+                { name: 'CompletedData', index: 'CompletedData', align: 'left' },
+                { name: 'RealPrice', index: 'RealPrice', align: 'left' },
+                { name: 'OrderStatus', index: 'OrderStatus', align: 'left' }
+                //{ name: 'Operations', index: 'Operations', align: 'left', formatter: DetailOperationBtn }
+            ],
+            postData: { EnterpriseNameStr: $("#enterprisename").val(), CustomerReportNOStr: $("#mCustomerReportNO").val(), SearchOpt: $("#detailsdata").val(), FromDate: $("#datepickerFrom").val(), ToDate: $("#datepickerTo").val() },
+            rownumbers: false,
+            altRows: false,
+            viewrecords: true,
+            rowNum: 15,
+            rowList: [15, 20, 25],
+            gridComplete: function () {
+                $("#gridPager_left").hide();
+            },
+            beforeSelectRow: function (rowid, e) {
+                return false;
+            },
+            jsonReader: {
+                id: "OrderNO",
+                repeatitems: false
+            },
+            pager: $('#gridPager')
+        }).navGrid('#gridPager');
+        var pickerOpts = {
+            dateFormat: "yy-mm-dd"
+            //,regional: "zh-CN"
+        };
+        $("#datepickerFrom").datepicker(pickerOpts);
+        $("#datepickerTo").datepicker(pickerOpts);
+    });
+
+    function DetailOperationBtn(cellvalue, options, rowObject) {
+        if (rowObject.OrderStatus == "已完成") {
+            return "<a href='/Download/GetFile?Id=" + rowObject.OrderNO + "' style=\"text-decoration:underline; color:brown; \">" + '下载报告' + "</a>";
+        }
+        else {
+            return "<a href='/Search/Details?Id=" + rowObject.OrderNO + "' style=\"text-decoration:underline; color:brown; \">" + '加急' + "</a>";
+        }
+    }
+</script>

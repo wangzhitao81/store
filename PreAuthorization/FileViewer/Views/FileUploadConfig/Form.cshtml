@@ -1,0 +1,64 @@
+﻿@model FileViewer.Models.ConfigModel
+<div id="info" style="height: 150px; overflow-y: auto;">
+    @using (Html.BeginForm(this.ViewContext.RouteData.Values["action"].ToString(), "FileUploadConfig", FormMethod.Post, new { @id = "sd" }))
+    {
+        <input name="Id" type="hidden" value="@Model.Id" />
+        <table class="tform">
+            <tr>
+                <th style="width:80px">
+                    项目名称:
+                </th>
+                <td>
+                    <input name="ProjectName" value="@Model.ProjectName" class="easyui-validatebox" required="true" validtype="length[1,30]" />
+                </td>
+            </tr>
+            <tr>
+                <th style="width:80px">
+                    上传路径:
+                </th>
+                <td>
+                    <input name="UploadBasePath" value="@Model.UploadBasePath" class="easyui-validatebox" required="true" validtype="length[1,30]" />
+                </td>
+            </tr>
+        </table>
+    }
+</div>
+<div class="dialog-button" style="text-align: center;">
+    <a href="#" class="easyui-linkbutton" onclick="autoadd=true;Submit();">保存新增</a>
+    <a href="#" class="easyui-linkbutton" onclick="autoadd=false;Submit();">保存关闭</a>
+</div>
+<script type="text/javascript">
+    var autoadd;
+    var isSubmit = false;
+    function Submit() {
+        if (!isSubmit) {
+            isSubmit = true;
+            setTimeout(function () { isSubmit = false; }, 500);
+            $('#sd').submit();
+        }
+    }
+    if (window.$) {
+        $('#sd').form({
+            success: function (data) {
+                if (data === "1") {
+                    if (autoadd) {
+                        $('.easyui-dialog').dialog('refresh', '@Url.Action("Add")');
+                    }
+                    else {
+                        CloseChildWindow();
+                        $(".easyui-datagrid").datagrid("load");
+                    }
+                }
+                else {
+                    $.messager.alert('提示', data);
+                }
+            }
+        });
+        $.parser.onComplete = function () {
+            $('#sd').form("validate");
+        }
+    }
+
+
+</script>
+

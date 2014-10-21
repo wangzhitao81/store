@@ -1,0 +1,53 @@
+﻿@model CRModel.Models.LoginModel
+@{
+    ViewBag.Title = "LoginView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+@using (Html.BeginForm("LoginView", "Account", new { @class = "form-horizontal", role = "form", ReturnUrl = ViewBag.ReturnUrl }))
+{
+    <div class="modal-dialog" style="z-index:100000">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">@Resources.Resources.Login</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <img src='@Url.Content("~/Content/images/icon_login.png")' alt="" />
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="form-group" id="errormsg">
+                            @Html.ValidationSummary(true, Resources.Resources.UsernameorPasswordInvalid, new { style = "height: 20px; color: #b94a48; margin-left: 130px; font-size: 12px; padding-bottom: -15px;" })
+                        </div>
+                        <div class="form-group">
+                            <label for="inputUserName" class="col-sm-3 control-label">@Resources.Resources.UserName</label>
+                            <div class="col-sm-9">
+                                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = Resources.Resources.UserName, onkeydown = "FormOnkeydown();" })
+                                @Html.ValidationMessageFor(m => m.UserName, Resources.Resources.InputUserName, new { style = "font-size:12px;" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword" class="col-sm-3 control-label">@Resources.Resources.Password</label>
+                            <div class="col-sm-9">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = Resources.Resources.Password, onkeydown = "FormOnkeydown();" })
+                                @Html.ValidationMessageFor(m => m.Password, Resources.Resources.InputPassword, new { style = "font-size:12px;" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="submitbtn" type="submit" class="btn btn-primary">@Resources.Resources.Submit</button>
+            </div>
+        </div>
+    </div>
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#loginLink").hide();
+    });
+</script>

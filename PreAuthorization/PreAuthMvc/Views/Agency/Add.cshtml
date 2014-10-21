@@ -1,0 +1,67 @@
+﻿@model PreAuthMvc.Models.AgencyViewModel
+
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_ContentLayout.cshtml";
+}
+<div class="right_content">
+    <input type="hidden" id="sessionUUID" name="sessionUUID" value='@ViewData["sessionUUID"]'>
+    @using (Html.BeginForm())
+    {
+        <div class="list_header">
+            机构管理
+            <div class="top_m_l"></div>
+            <div class="top_m_r"></div>
+        </div>
+        <input type="hidden" value=@ViewData["usrId"] name="usrId" id="usrId">
+        <input type="hidden" value=@ViewData["adminUserName"] name="adminUserName" id="adminUserName">
+        <table cellspacing="0" cellpadding="0" width="100%" border="0" class="t-form">
+            <tbody>
+                <tr>
+                    <td class="lbl">@Html.LabelFor(model => model.AgencyCode) </td>
+                    <td>
+                        <input type="hidden" value=@Html.ValueFor(model => model.Id) name="recordId" id="recordId">
+                        <input type="text" maxlength="32" autocomplete="off" class="txt" value='@Html.ValueFor(model => model.AgencyCode)' name="AgencyCode" id="AgencyCode">
+                        <span class="red_mark">*</span><span id="AgencyCodeTip"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="lbl">@Html.LabelFor(model => model.AgencyName) </td>
+                    <td>
+                        <input type="text" maxlength="32" autocomplete="off" class="txt" value='@Html.ValueFor(model => model.AgencyName)' name="AgencyName" id="AgencyName">
+                        <span class="red_mark">*</span><span id="AgencyNameTip"></span>
+
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+        <div class="btn_line">
+            <input type="button" id="okBtn" value="确定" class="btn_blue" />
+            <input type="button" id="cancelBtn" value="取消" class="btn_gray" />
+        </div>
+    }
+
+</div>
+<script type="text/javascript">
+    upms.history.go("cancelBtn");// 取消按钮
+    upms.handlebtn.submit({// 确定batch
+        btnid: "okBtn",
+        url: '@Url.Action("SubmitAdd", "Agency")',
+        params: [
+                { name: "recordId", targetid: "recordId", type: "text" },
+                { name: "AgencyCode", targetid: "AgencyCode", type: "text" },
+                { name: "AgencyName", targetid: "AgencyName", type: "text" }
+                //{ name: "userAuth", targetname: "userAuth", type: "checkbox" }
+        ],
+        validate: {
+            model: "batch",
+            params: [
+                {
+                    targetid: "AgencyCode", type: "text", infoid: "AgencyCodeTip", checkarray: [{ falsetip: "机构编码不能为空!", oncheck: upms.checkUtils.isNotEmptyStr }]
+                },
+                { targetid: "AgencyName", type: "text", infoid: "AgencyNameTip", falsetip: "机构名称不能为空!", oncheck: upms.checkUtils.isNotEmptyStr }
+            ]
+        }
+    });
+</script>

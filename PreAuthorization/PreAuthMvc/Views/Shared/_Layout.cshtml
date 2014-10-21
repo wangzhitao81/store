@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="~/Scripts/easyui/themes/icon.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.11.0.js"></script>
+    <link href="~/Scripts/easyui/themes/default/easyui.css" rel="stylesheet" />
+    <script src="~/Scripts/easyui/jquery.easyui.js"></script>
+    <script src="~/Scripts/easyui/locale/easyui-lang-zh_CN.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery.validate.js"></script>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="robots" content="all" />
+    <meta name="Copyright" content="中国银联" />
+    <meta content="银联在线支付是中国银联联合商业银行共同推出的集成化、综合性、开放性网上支付平台,全面支持各类型银联卡,涵盖认证支付、快捷支付、普通支付、网银支付等多种支付方式,可为银联卡持卡人的购物缴费、商旅预定、慈善捐款、转账还款等提供安全、快捷、多选择、全球化的支付服务." name="description">
+    <meta content="银联,银联在线,中国银联,银联支付,银联在线支付,中国银联在线,银联在线商城,银联在线还款,中国银联在线支付,银联支付平台" name="keywords">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="cache-control" content="no-cache">
+    <meta http-equiv="expires" content="-1">
+
+    <link href="~/omer/resources/zh_cn/css/global.css" rel="stylesheet" type="text/css" />
+    <link href="~/omer/resources/zh_cn/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="~/omer/resources/zh_cn/css/redmond/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="~/omer/resources/js/jquery/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="~/omer/resources/js/jquery/jquery-ui-1.9.2.custom.min.js"></script>
+    <script type="text/javascript" src="~/omer/resources/js/My97DatePicker/WdatePicker.js"></script>
+    
+    <script src="~/omer/resources/js/upms.js"></script>
+    <script src="~/omer/resources/js/upms-lang-zh-cn.js"></script>
+    @RenderSection("Head", required: false)
+</head>
+<body class="body-bg">
+    <input type="hidden" id="sessionUUID" name="sessionUUID" value=@ViewData["sessionUUID"]>
+    @*<form runat="server">*@
+        <div class="body-bg-left">
+            <div class="body-bg-right">
+                <!--S header -->
+                <div id="header">
+                    <div class="header-logo"> <a href='@Url.Action("Index", "Home")'>首页</a> </div>
+                    <div class="header-user">
+                        <ul>
+                            <li>欢迎, </li>
+                            <!--<li><a href="javascript: void(0);" class="login-out" id="editPwdFuncion">修改密码</a></li>-->
+                            <li><a href='@Url.Action("logOut", "Account")' class="login-out">安全退出</a></li>
+                            <!--<li><a target="_blank" href="~/static/help/default.html"> 帮助</a></li>-->
+                        </ul>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+                <!--E header-->
+                <div class="nav">
+                    <div class="nav_left">当前位置：<span id="currAddr_main">首页</span> &gt; <b><span id="currAddr_child">欢迎页</span></b></div>
+                    <!--<div class="nav_right">
+                        <div class="note_t">公告：</div>
+                        <div class="note_c">
+                            <iframe src="https://online.unionpay.com/static/notice/notice_iframe_148.html" scrolling="no" allowtransparency="true" height="20px" width="95%" frameborder="0"></iframe>
+                        </div>
+                        <div class="note_m"><a href="http://online.unionpay.com/static/notice/notice_list_148.html" target="_blank">更多</a></div>
+                    </div>-->
+                    <div class="clear"></div>
+                </div>
+                <div class="content">
+                    <div class="left_menu">
+                        <div class="p_menu">
+                            <span class="icon_home"></span>
+                            <em class="title">欢迎页</em>
+                            <div class="top_m_l"></div>
+                            <div class="top_m_r"></div>
+                        </div>
+                        <div class="p_menu">
+                            <span class="icon_web"></span>
+                            <em class="title">业务处理</em>
+                            <em class="menu_open menu_close"></em>
+                        </div>
+                        <ul>
+                            <li>
+                                <a href='javascript:void(0);' action='@Url.Action("Index","PreAuth")' >
+                                    预授权
+                                </a>
+                                <em></em>
+                            </li>
+                            <li>
+                                <a href='javascript:void(0);' action='@Url.Action("Index", "CancelPreAuth")'>
+                                    撤销预授权
+                                </a>
+                                <em></em>
+                            </li>
+                            <li>
+                                <a href='javascript:void(0);' action='@Url.Action("CompleteIndex", "PreAuth")'>
+                                    完成预授权
+                                </a>
+                                <em></em>
+                            </li>
+                            <li>
+                                <a href='javascript:void(0);' action='@Url.Action("CancelComplete", "PreAuth")'>
+                                    完成后撤销
+                                </a>
+                                <em></em>
+                            </li>
+                            <li>
+                                <a href='javascript:void(0);' action='@Url.Action("Index", "QueryPreAuth")'>
+                                    预授权客户查询
+                                </a>
+                                <em></em>
+                            </li>
+                        </ul>
+                        <div class="p_menu">
+                            <span class="icon_user"></span>
+                            <em class="title">系统管理</em>
+                            <em class="menu_open"></em>
+                        </div>
+                        <ul>
+                            <li>
+                                <a href='javascript:void(0);' action='@Url.Action("Index", "Agency")'>机构管理</a>
+                                <em></em>
+                            </li>
+                            <li>
+                                <a href='javascript:void(0);' action='@Url.Action("Index", "Function")'>功能管理</a>
+                                <em></em>
+                            </li>
+                            <li>
+                                <a href='javascript:void(0);' action='@Url.Action("Index", "Role")'>角色管理</a>
+                                <em></em>
+                            </li>
+                            <li>
+                                <a href='javascript:void(0);' action='@Url.Action("Index", "User")'>用户管理</a>
+                                <em></em>
+                            </li>
+                            <li>
+                                <a href='javascript:void(0);' action='@Url.Action("Index", "Authority")'>权限分配</a>
+                                <em></em>
+                            </li>
+                            <li>
+                                <a href='javascript:void(0);' action='@Url.Action("DictIndex", "Agency")'>字典管理</a>
+                                <em></em>
+                            </li>
+                        </ul>
+                        <div class="p_menu">
+                            <span class="icon_dz"></span>
+                            <em class="title">
+                                我的测试
+                            </em>
+                            <em class="menu_open"></em>
+                        </div>
+                        <ul>
+                            <li>
+                                <a href='javascript:void(0);' action='@Url.Action("PagedTest1", "Test")'>分页测试</a>
+                                <em></em>
+                            </li>
+                        </ul>
+                        
+                        
+                    </div>
+                    <!--end of left_menu-->
+                    <div id="_mainContent_" class="main_content">
+                        <div class="right_content">
+                            @RenderBody()
+                        </div><!--end of right_content-->
+                    </div>
+                    <!--end of main_content-->
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+        <!--S footer -->
+        <div id="footer">
+            <p class="fl">
+                <!--<a href="http://www.unionpay.com/" target="_blank">UnionPay Web</a>|
+                <a href="http://online.unionpay.com/" target="_blank">Online Payment</a>|
+                <a href="https://online.unionpay.com/static/common/about.html">About Us</a>|
+                <a href="~/omer/DOC/docMng!queryDoc.action" target="_blank">Document Download</a>-->
+            </p>
+            <p class="fr"> Copyright © 2002 – 2014 All rights reserved. </p>
+        </div>
+        <!--E footer-->
+    @*</form>*@
+</body>
+
+</html>
+<script type="text/javascript">
+    upms.installWebObj($("#_mainContent_"));
+    upms.WEBMAIN.initLayout();
+    upms.WEBMAIN.initMenu("PreAuth/Index");
+    //upms.WEBLANG.initLang($(".language"));
+    upms.installOverLay({// 安装ajax遮罩
+        type: "font",
+        opacity: 0.8,
+        fontcss: {
+            color: "black"
+        }
+    });
+</script>

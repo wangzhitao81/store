@@ -1,0 +1,89 @@
+﻿@model IList<PreAuthMvc.Models.CompletePreAuthViewModel>
+@{
+    ViewBag.Title = "QueryResult";
+    Layout = "~/Views/Shared/_ContentLayout.cshtml";
+}
+
+<table cellspacing="0" cellpadding="0" width="100%" border="0" class="t-list">
+    <tbody>
+        <tr>
+            <th>
+                操作
+            </th>
+            <th>
+                手机号码
+            </th>
+            <th>
+                客户姓名
+            </th>
+            <th>
+                身份证号
+            </th>
+            <th>
+                操作状态
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <input type="hidden" name="recordId" value='@item.Id' />
+                    <input type="hidden" name="usrId" value='@ViewData["usrId"]' />
+                    <input type="hidden" name="usrLoginNm" value='@ViewData["usrLoginNm"]' />
+                    <a href="javascript: void(0);" name="qCompleteBtn" sendparam="recordId,usrId" class="uline single">完成预授权</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PreAuthInfo.TelNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PreAuthInfo.CustomerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PreAuthInfo.CustomerIdNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PreAuthInfo.StateName)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="page">
+    <div class="pgtotal">
+        共<em>@ViewData["totalRecords"]</em>条记录;
+    </div>
+    <div class="pgtotal">
+        总共<em>@ViewData["totalPages"]</em>页
+    </div>
+    <span>
+        跳转至第 <input type="text" id="goPageNo" name="goPageNo" style="width:35px;height: 25px;" onkeyup='this.value=this.value.replace(/[^0-9]\D*$/,"")' autocomplete="off" />
+        页 <input type="image" id="goBtn" name="goBtn" src="~/omer/resources/zh_cn/images/btn_page.gif">
+    </span>
+    <span id="pgbtn"></span>
+    <div class="clear"></div>
+    <input type="hidden" id="pageNo" name="pageNo" value=@ViewData["pageNo"] />
+    <input type="hidden" id="totalRecords" name="totalRecords" value=@ViewData["totalRecords"] />
+    <input type="hidden" id="totalPages" name="totalPages" value=@ViewData["totalPages"] />
+</div>
+<script type="text/javascript">
+    upms.grid.gridhover(".t-list");
+    upms.pagequery.initpaging({// 分页
+        pgbtnid: "pgbtn",
+        resultdivid: "resultDiv",
+        url: '@Url.Action("CompleteQuery", "PreAuth")',
+        opertype: "requery"
+    });
+    upms.griddialog.execute({// 完成操作
+        btnname: "qCompleteBtn",
+        url: '@Url.Action("DoComplete", "PreAuth")',
+        dialogtitle: "信息提示",
+        dialogtip: "你确认要做完成预授权操作吗?",
+        errinfoid: "_uniformErrTip",
+        errinfotip: "完成操作失败!",
+        succinfoid: "_uniformSuccTip",
+        succinfotip: "完成操作成功!"
+    });
+</script>
+
+

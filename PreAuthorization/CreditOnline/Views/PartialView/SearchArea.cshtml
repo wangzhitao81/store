@@ -1,0 +1,80 @@
+﻿@{
+    string SearchType = string.Empty;
+    string SearchInput = string.Empty;
+    if (ViewData["SearchOptions"] != null)
+    {
+        SearchType = ViewData["SearchOptions"].ToString();
+    }
+    if (ViewData["InputSearch"] != null)
+    {
+        SearchInput = ViewData["InputSearch"].ToString();
+    }
+}
+<div class="jumbotron">
+    <div class="container body-content">
+        @using (Html.BeginForm("Index", "Search", FormMethod.Post, new { Id = "SearchArea" }))
+        {
+            <img src='@Url.Content("~/Content/images/icon_search.png")' alt="" />
+            <label class="radio-inline" style="margin-left:15px;">
+                <input type="radio" name="searchOptions" id="EnterpriseName" value="0" checked="checked" onclick="setValue('0');">
+                @Resources.Resources.EnterpriseName
+            </label>
+            @*<label class="radio-inline">
+                    <input type="radio" name="searchOptions" id="CrediteyeNo" value="1">
+                    倍通编号
+                </label>*@
+            <label class="radio-inline">
+                <input type="radio" name="searchOptions" id="OrganizationCode" value="2" onclick="setValue('2');">
+                @Resources.Resources.OrgCode
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="searchOptions" id="RegisteredNo" value="3" onclick="setValue('3');">
+                @Resources.Resources.IndustryRegisterNO
+            </label>
+            <input type="text" class="form-control" id="inputSearch" name="inputSearch" style="display:inline!important; margin-left:45px;">
+            <input type="button" onclick="SearchBtnClick();" class="btn btn-primary" style="margin-left:30px;width:120px;" value='@Resources.Resources.Search' />
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    function setValue(value) {
+        $("[name=searchOptions]").val(value);
+    }
+
+    function SearchBtnClick() {
+        if ($("#inputSearch").val().trim(' ') == "") {
+            alert('@Resources.Resources.PleaseInput');
+            return;
+        }
+        $('#SearchArea').submit();
+    }
+    $(document).ready(function () {
+        $("#EnterpriseName").removeAttr('checked');
+        $("#CrediteyeNo").removeAttr('checked');
+        $("#OrganizationCode").removeAttr('checked');
+        $("#RegisteredNo").removeAttr('checked');
+        switch ('@SearchType') {
+            case "0":
+                $("#EnterpriseName").attr('checked', 'ckecked');
+                $("#EnterpriseName").click();
+                break;
+            case "1":
+                $("#CrediteyeNo").attr('checked', 'ckecked');
+                $("#CrediteyeNo").click();
+                break;
+            case "2":
+                $("#OrganizationCode").attr('checked', 'ckecked');
+                $("#OrganizationCode").click();
+                break;
+            case "3":
+                $("#RegisteredNo").attr('checked', 'ckecked');
+                $("#RegisteredNo").click();
+                break;
+            default:
+                $("#EnterpriseName").attr('checked', 'ckecked');
+                $("#EnterpriseName").click();
+                break;
+        }
+        $("#inputSearch").val('@SearchInput');
+    });
+</script>

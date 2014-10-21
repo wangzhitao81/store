@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/CRModel.Models" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/CRModel.Models" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:5508/CRService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="ArrayOfDicModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DicModel" nillable="true" type="tns:DicModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDicModel" nillable="true" type="tns:ArrayOfDicModel" />
+  <xs:complexType name="DicModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DicModel" nillable="true" type="tns:DicModel" />
+  <xs:complexType name="ArrayOfSearchResultModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SearchResultModel" nillable="true" type="tns:SearchResultModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSearchResultModel" nillable="true" type="tns:ArrayOfSearchResultModel" />
+  <xs:complexType name="SearchResultModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ChineseName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CrediteyesNO" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SearchResultModel" nillable="true" type="tns:SearchResultModel" />
+  <xs:complexType name="OrderModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="City" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CompanyURL" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Contact" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ContractNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreateUser" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CrediteyesNO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerProfileNO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerReportNO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DeliverDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ENName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EnterpriseSuppliedName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExpressType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Fax" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Fee" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HiddenDefaultLanguage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NationCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NeedInterview" type="xs:boolean" />
+      <xs:element minOccurs="0" name="OperationCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderNO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PostCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RegisterNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RegistrationNumber" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Remarks" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReportType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SuppliedAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Telephone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TranslationLanguage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Uid" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ValueAddedTaxNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="VestingAgency" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="OrderModel" nillable="true" type="tns:OrderModel" />
+  <xs:complexType name="ContractModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CellPrice" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ContractDepartment" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ContractDetails" nillable="true" type="tns:ArrayOfContractDetailsModel" />
+      <xs:element minOccurs="0" name="ContractNO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreateBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreateOn" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CurrencyType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerProfileNO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EndDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="PaymentMethod" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Remarks" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StartDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Status" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TimeStamp" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="TranslationFeeModels" nillable="true" type="tns:ArrayOfTranslationFeeModel" />
+      <xs:element minOccurs="0" name="UpdateBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UpdateOn" nillable="true" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ContractModel" nillable="true" type="tns:ContractModel" />
+  <xs:complexType name="ArrayOfContractDetailsModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ContractDetailsModel" nillable="true" type="tns:ContractDetailsModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfContractDetailsModel" nillable="true" type="tns:ArrayOfContractDetailsModel" />
+  <xs:complexType name="ContractDetailsModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ChargeCriterion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ChargeType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CommonCriterion" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="CommonDays" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="ContractNO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreateBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreateOn" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DefaultLanguage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExpressCriterion" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ExpressDays" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="NationCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Remarks" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReportType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TimeStamp" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="UpdateBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UpdateOn" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="UrgentCriterion" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="UrgentDays" nillable="true" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ContractDetailsModel" nillable="true" type="tns:ContractDetailsModel" />
+  <xs:complexType name="ArrayOfTranslationFeeModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TranslationFeeModel" nillable="true" type="tns:TranslationFeeModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTranslationFeeModel" nillable="true" type="tns:ArrayOfTranslationFeeModel" />
+  <xs:complexType name="TranslationFeeModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ChargeCriterion" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ChargeType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ContractNO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreateBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreateOn" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="TimeStamp" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="TranslationType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TranslationTypeModels" nillable="true" type="tns:ArrayOfTranslationTypeModel" />
+      <xs:element minOccurs="0" name="UpdateBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UpdateOn" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="WorkingDays" nillable="true" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TranslationFeeModel" nillable="true" type="tns:TranslationFeeModel" />
+  <xs:complexType name="ArrayOfTranslationTypeModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TranslationTypeModel" nillable="true" type="tns:TranslationTypeModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTranslationTypeModel" nillable="true" type="tns:ArrayOfTranslationTypeModel" />
+  <xs:complexType name="TranslationTypeModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ChargeCriterions" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ChargeType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreateBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreateOn" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TimeStamp" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="UpdateBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UpdateOn" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="WorkingDays" nillable="true" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TranslationTypeModel" nillable="true" type="tns:TranslationTypeModel" />
+  <xs:complexType name="ArrayOfOrderModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="OrderModel" nillable="true" type="tns:OrderModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfOrderModel" nillable="true" type="tns:ArrayOfOrderModel" />
+  <xs:complexType name="EnterpriseInfoModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CNAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CNFullSpelling" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CNName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CNShortSpelling" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CityCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CrediteyesNO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DefaultCurrency" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DistrictCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ENAddress" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ENName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Fax" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="NationCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OperationCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Postcode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RegisterNO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Remarks" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="ReportDetails" nillable="true" type="q1:ArrayOfKeyValueOfstringCreditReportModelnnutf37d" />
+      <xs:element minOccurs="0" name="Telephone" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Web" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EnterpriseInfoModel" nillable="true" type="tns:EnterpriseInfoModel" />
+  <xs:complexType name="CreditReportModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CompletedTime" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Contents" nillable="true" type="tns:ArrayOfReportContentModel" />
+      <xs:element minOccurs="0" name="CrediteyesNO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FinancialYear" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="LastedYear" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="ReportIndex" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReportNO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReportName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CreditReportModel" nillable="true" type="tns:CreditReportModel" />
+  <xs:complexType name="ArrayOfReportContentModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ReportContentModel" nillable="true" type="tns:ReportContentModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfReportContentModel" nillable="true" type="tns:ArrayOfReportContentModel" />
+  <xs:complexType name="ReportContentModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="ReportNO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReportType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StorePath" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ReportContentModel" nillable="true" type="tns:ReportContentModel" />
+  <xs:complexType name="ArrayOfReportDetailsModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ReportDetailsModel" nillable="true" type="tns:ReportDetailsModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfReportDetailsModel" nillable="true" type="tns:ArrayOfReportDetailsModel" />
+  <xs:complexType name="ReportDetailsModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Address" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CompletedData" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CustomerReportNO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DeliverType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EnterpriseName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Language" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LanguageValue" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Operations" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderDate" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderNO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RealPrice" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReportType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReportTypeValue" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ScheduledDate" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ReportDetailsModel" nillable="true" type="tns:ReportDetailsModel" />
+  <xs:complexType name="ArrayOfEmailErrorDetailsModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="EmailErrorDetailsModel" nillable="true" type="tns:EmailErrorDetailsModel" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfEmailErrorDetailsModel" nillable="true" type="tns:ArrayOfEmailErrorDetailsModel" />
+  <xs:complexType name="EmailErrorDetailsModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CreateTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CustomSendTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="CustomerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EmailContent" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ErrorMsg" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="IsDelete" type="xs:int" />
+      <xs:element minOccurs="0" name="OrderNo" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Receiver" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Subject" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Uid" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="UpdateTime" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EmailErrorDetailsModel" nillable="true" type="tns:EmailErrorDetailsModel" />
+  <xs:complexType name="EmailOrderModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EmailContent" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EmailContentBinary" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="ErrorMsg" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="IsDelete" type="xs:int" />
+      <xs:element minOccurs="0" name="Receiver" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SendTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Sender" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Subject" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Uid" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EmailOrderModel" nillable="true" type="tns:EmailOrderModel" />
+  <xs:complexType name="NationModel">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CN" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Code" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EN" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ENAbbreviation" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FullSpelling" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Id" type="xs:int" />
+      <xs:element minOccurs="0" name="ReportType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShortSpelling" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="NationModel" nillable="true" type="tns:NationModel" />
+  <xs:complexType name="ReturnObject">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ErrorCode" type="xs:int" />
+      <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ReturnObject" nillable="true" type="tns:ReturnObject" />
+  <xs:complexType name="ArrayOfReportInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ReportInfo" nillable="true" type="tns:ReportInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfReportInfo" nillable="true" type="tns:ArrayOfReportInfo" />
+  <xs:complexType name="ReportInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CrediteyesNO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FinancialYear" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastedYear" type="xs:int" />
+      <xs:element minOccurs="0" name="OrderNO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="OrderStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReportIndex" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReportLanguage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReportNO" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReportName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ReportType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StorePath" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ReportInfo" nillable="true" type="tns:ReportInfo" />
+</xs:schema>

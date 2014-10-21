@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "";
+    Layout = null;
+}
+
+<div class="list_header">
+    操作完成
+    <div class="top_m_l"></div>
+    <div class="top_m_r"></div>
+</div>
+<div class="single_ct clearfix">
+    <div class="tips clearfix">
+        <div class="rt_word" style="margin-left: 110px;">
+            <div class="main_word">
+                <img style="margin-right: 4px; margin-bottom: 2px;" src="~/omer/resources/zh_cn/images/success_24px.gif">
+                <b>恭喜你!&nbsp;&nbsp;&nbsp;@ViewData["ActionName"]操作成功了！</b>
+            </div>
+            <p>请继续操作本网站的其他业务</p>
+            <div class="btn_go">
+                <input class="btn_gray" id="returnBtn" type="button" value="返 回">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    //upms.history.go("returnBtn");// 取消按钮
+    var sUrl = '@ViewData["RedirectAction"].ToString()';
+    sUrl = '@Url.Action((string)ViewData["RedirectAction"], ViewData["Controller"])';
+    var $currPgDiv = upms.getCurrPageDiv();
+    $("#returnBtn", $currPgDiv).bind("click", function () {
+        upms.showOverLay();// 打开遮罩
+        upms.clearWebObj();// 清空webObj对象
+        var $newPgDiv = upms.createPageDiv();
+        var data = {};
+        upms.$load($newPgDiv, sUrl, data, function () { upms.hideOverLay(); });
+    });
+</script>

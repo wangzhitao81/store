@@ -1,0 +1,139 @@
+﻿@model FileViewer.Models.UserModel
+@using (Html.BeginForm(this.ViewContext.RouteData.Values["action"].ToString(), "User", FormMethod.Post, new { @id = "sd" }))
+{
+    <input name="Id" type="hidden" value="@Model.Id" />
+    <table class="tform">
+        <tr>
+            <th style="width:80px;">
+                用户编码:
+            </th>
+            <td>
+                <input name="UserId" value="@Model.UserId" class="easyui-validatebox" style="width:150px" required="true" validtype="length[1,30]" />
+            </td>
+            <th style="width:80px">
+                用户名称:
+            </th>
+            <td>
+                <input name="UserName" value="@Model.UserName" class="easyui-validatebox" style="width:150px" required="true" validtype="length[1,30]" />
+            </td>
+            <td style="width:200px;padding:0px;" rowspan="4">
+                <input id="UserMenu" name="UserMenu" type="hidden" />
+                <div style="width:200px;height:350px;overflow-y:auto;">
+                    <ul id="UserMenuTree" class="easyui-tree" data-options="url:'@Url.Action("menuTree")?UserId=@Model.UserId',checkbox:true"></ul>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            @if (this.ViewContext.RouteData.Values["action"].ToString() == "Add")
+            {  
+            <th>
+                密码:
+            </th>
+            <td>
+                <input type="password" name="Password" style="width:150px" class="easyui-validatebox" required="true" validtype="length[1,30]" />
+            </td>
+            <th>
+                是否禁用:
+            </th>
+            <td>
+                @Html.CheckBox("IsDisable", string.IsNullOrEmpty(Model.IsDisable) ? false : Convert.ToBoolean(Convert.ToInt16(Model.IsDisable)))
+            </td>
+            }
+            else
+            {
+            <th>
+                是否禁用:
+            </th>
+            <td colspan="3">
+                @Html.CheckBox("IsDisable", string.IsNullOrEmpty(Model.IsDisable) ? false : Convert.ToBoolean(Convert.ToInt16(Model.IsDisable)))
+            </td>    
+            }
+        </tr>
+        <tr style="height: 250px">
+            <td colspan="4" style="padding:0px;">
+                <table class="easyui-datagrid"  data-options="
+                    singleSelect:true,
+                    remoteSort: false,
+                    multiSort:true,
+                    url:'/User/GetConfigList?UserId=@Model.UserId',
+                    width:561,
+                    height:280
+                ">
+                    <thead>
+                        <tr>
+                            <th data-options=" field:'ProjectName',width:200">项目名称</th>
+                            <th data-options="field:'AllowRead',width:100" formatter="SetAllowRead" align="center">允许读取</th>
+                            <th data-options="field:'AllowDelete',width:100" formatter="SetAllowDelete" align="center">允许删除</th>
+                        </tr>
+                    </thead>
+                </table>
+            </td>
+        </tr>
+    </table>
+}
+<div class="dialog-button" style="text-align: center;">
+    <a href="#" class="easyui-linkbutton" onclick="autoadd=true;Submit();">保存新增</a>
+    <a href="#" class="easyui-linkbutton" onclick="autoadd=false;Submit();">保存关闭</a>
+</div>
+<script type="text/javascript">
+    var autoadd;
+    var isSubmit = false;
+    function Submit() {
+        if (!isSubmit) {
+            isSubmit = true;
+            setTimeout(function () { isSubmit = false; }, 500);
+            var nodes = $('#UserMenuTree').tree('getChecked');
+            var nodeParents = $('#UserMenuTree').tree('getChecked',"indeterminate");
+			var s = '';
+			for(var i=0; i<nodes.length; i++){
+			    if (s != '') s += ',';
+			    s += nodes[i].id;
+			}
+            for(var i=0; i<nodeParents.length; i++){
+			    if (s != '') s += ',';
+			    s += nodeParents[i].id;
+			}
+            $('#UserMenu').val(s);
+            $('#sd').submit();
+        }
+    }
+    if (window.$) {
+        $('#sd').form({
+            success: function (data) {
+                if (data === "1") {
+                    if (autoadd) {
+                        $('.easyui-dialog').dialog('refresh', '@Url.Action("Add")');
+                    }
+                    else {
+                        CloseChildWindow();
+                        $(".easyui-datagrid").datagrid("load");
+                    }
+                }
+                else {
+                    $.messager.alert('提示', data);
+                }
+            }
+        });
+        $.parser.onComplete = function () {
+            $('#sd').form("validate");
+        }
+    }
+    function SetAllowRead(value, rowData, rowIndex) {
+        if (value == "1") {
+            return '<input type="checkbox" name="AllowRead" value="' + rowData.ProjectName + '" checked>';
+        }
+        else {
+            return '<input type="checkbox" name="AllowRead" value="' + rowData.ProjectName + '">';
+        }
+    }
+    function SetAllowDelete(value, rowData, rowIndex) {
+        if (value == "1") {
+            return '<input type="checkbox" name="AllowDelete" value="' + rowData.ProjectName + '" checked>';
+        }
+        else {
+            return '<input type="checkbox" name="AllowDelete" value="' + rowData.ProjectName + '">';
+        }
+    }
+</script>
+
+

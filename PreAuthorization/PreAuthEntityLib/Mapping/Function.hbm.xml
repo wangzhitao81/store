@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="PreAuthEntityLib.Vo" assembly="PreAuthEntityLib">
+
+  <class name="FunctionVo" table="Sys_Function" >
+
+    <!-- Primary Key(s) -->
+    <id name="Id" column="RecordId">
+      <!--<generator class="identity" />-->
+      <generator class="sequence">
+        <param name="sequence">TestSeq</param>
+      </generator>
+    </id>
+
+    <property name="FunctionCode" column="FunctionCode" not-null="true" />
+    <property name="FunctionName" column="FunctionName" not-null="true" />
+    <property name="FunctionUrl" column="FunctionUrl" not-null="true" />
+
+  </class>
+</hibernate-mapping>

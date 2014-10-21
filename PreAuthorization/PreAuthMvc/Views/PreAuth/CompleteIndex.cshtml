@@ -1,0 +1,117 @@
+﻿@model IList<PreAuthMvc.Models.CompletePreAuthViewModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ContentLayout.cshtml";
+}
+<script src="~/Scripts/IdCard-Validate.js"></script>
+<div class="list_header">
+    完成预授权
+    <div class="top_m_l"></div>
+    <div class="top_m_r"></div>
+</div>
+<!-- 错误信息提示div -->
+<div class="listError dn" id="_uniformErrTip"></div>
+<form name="_currDateQufrm" id="_currDateQufrm">
+    <table width="100%" class="t-form" border="0" cellspacing="0" cellpadding="0">
+        <tbody>
+            <tr>
+                <td width="18%" class="lbl">
+                    手机号码
+                </td>
+                <td width="30%">
+                    <input name="telNumber" class="txt" id="telNumber" type="text" maxlength="11" autocomplete="off">
+                </td>
+                <td width="18%" class="lbl">
+                    身份证号
+                </td>
+                <td width="34%">
+                    <input name="customerIdNo" class="txt" id="customerIdNo" type="text" maxlength="18" autocomplete="off">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+<!-- 查询按钮S -->
+<div class="btn_line">
+    <input class="btn_blue" id="queryBtn" type="button" value="查询">
+</div>
+<!-- 查询按钮E -->
+<!-- 查询结果列表S -->
+<div id="resultDiv"></div>
+<script>
+
+    $(".show_more").bind("click", function () {
+        $(".more").show();
+        $(this).hide();
+    });
+    $(".hide_more").bind("click", function () {
+        $(".more").hide();
+        $(".show_more").show();
+    });
+
+    var url = '@Url.Action("CompleteQuery", "PreAuth")';
+    var checkParam = {
+        type: "binding",
+        callbackFlag: true,
+        checkMPhone: function () {
+            //手机号码
+            var telNumber = $("#telNumber").val();
+            if (upms.checkUtils.isNotEmptyStr(telNumber)) {
+                return upms.checkUtils.isMobilePhone(telNumber);
+            }
+        },
+        checkCustomerIdNo: function () {
+            //身份证号
+            var customerIdNo = $("#customerIdNo").val();
+            if (!upms.checkUtils.isEmptyStr(customerIdNo)) {
+                if (!upms.checkUtils.isChinese(customerIdNo)) {
+                    return IdCardValidate(customerIdNo);
+                }
+            }
+        },
+        checkQueryCondition: function () {
+            var telNumber = $("#telNumber").val();
+            var customerIdNo = $("#customerIdNo").val();
+            if (upms.checkUtils.isEmptyStr(telNumber)
+                && upms.checkUtils.isEmptyStr(customerIdNo)) {
+                return false;
+            } else {
+                return true;
+            }
+        },
+    };
+
+    var validParam = [
+    { targetid: "telNumber", type: "text", oncheck: checkParam.checkQueryCondition, falsedesc: "请输入正确的查询条件!" },
+    { targetid: "telNumber", type: "text", oncheck: checkParam.checkMPhone, falsedesc: "手机号码格式不正确!" },
+    { targetid: "customerIdNo", type: "text", oncheck: checkParam.checkCustomerIdNo, falsedesc: "身份证号码格式不正确!" }
+    ];
+
+    upms.pagequery.verifyExecute({
+        reqtype: "post",
+        queryformid: "_currDateQufrm",
+        querybtnid: "queryBtn",
+        validate: validParam,
+        errinfoid: "_uniformErrTip",
+        queryurl: '@Url.Action("CompleteQuery", "PreAuth")',
+        resultdivid: "resultDiv"
+    });
+
+    //upms.query("queryBtn", url, data,checkParam);// 查询按钮
+    //$(document).ready(function () {
+        //var myDate = new Date();
+        //var h = myDate.getHours() + "";
+        //var m = myDate.getMinutes() + 1 + "";
+        //var s = myDate.getSeconds() + "";
+
+        //h = h.length == 1 ? "0" + h : h;
+        //m = m.length == 1 ? "0" + m : m;
+        //s = s.length == 1 ? "0" + s : s;
+
+        //var beginD = "00:00:00";
+        //var endD = h + ":" + m + ":" + s;
+
+        //$("#startTm").val(beginD);
+        //$("#endTm").val(endD);
+    //});
+</script>

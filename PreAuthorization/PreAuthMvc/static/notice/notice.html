@@ -1,0 +1,82 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>公告</title>
+    <style type="text/css">
+        body {
+            background: #e9e9e9;
+        }
+
+        body, div, ul, li {
+            margin: 0;
+            padding: 0;
+            font-size: 12px;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        a {
+            color: #666;
+            text-decoration: none;
+        }
+
+            a:hover {
+                text-decoration: underline;
+            }
+
+        .list li {
+            height: 23px;
+            line-height: 23px;
+            width: 660px;
+            word-break: keep-all;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+</head>
+
+<body>
+    <!--公告-->
+    <div class="list">
+        <ul>
+            <li><a href="notice_detail_741.html" target="_blank">商户服务网站登录界面改版公告</a></li>
+            <li><a href="notice_detail_729.html" target="_blank">商户对账文件升级通知</a></li>
+            <li><a href="notice_detail_714.html" target="_blank">系统维护公告</a></li>
+            <li><a href="notice_detail_544.html" target="_blank">中国银联全渠道收单服务网站切换公告</a></li>
+            <li><a href="notice_detail_464.html" target="_blank">商户新对账文件上线通知</a></li>
+            <li><a href="notice_detail_465.html" target="_blank">银联商户服务网站退货功能升级</a></li>
+        </ul>
+    </div>
+    <script src="js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        //公告滚动效果
+        $(function () {
+            //公告滚动
+            var noticeScrollTimer;
+            $('.list').hover(function () {
+                clearInterval(noticeScrollTimer);
+            }, function () {
+                //判断公告大于1条时才滚动
+                if ($('.list li').length > 1) {
+                    noticeScrollTimer = setInterval(function () {
+                        scrollNoticeNews($('.list'));
+                    }, 2000);
+                }
+            }).trigger('mouseleave');
+
+        });
+        //公告滚动函数
+        function scrollNoticeNews(obj) {
+            var $self = obj.find('ul:first');
+            var lineHeight = $self.find('li:first').height();
+            $self.animate({ 'marginTop': -lineHeight + 'px' }, 600, function () {
+                $self.css({ marginTop: 0 }).find('li:first').appendTo($self);
+            });
+        }
+    </script>
+</body>
+</html>

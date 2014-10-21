@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2" namespace="PreAuthEntityLib.Vo" assembly="PreAuthEntityLib">
+
+  <class name="DictItemVo" table="T_DictItem" >
+
+    <!-- Primary Key(s) -->
+    <id name="Id" column="RecordId">
+      <!--<generator class="identity" />-->
+      <generator class="sequence">
+        <param name="sequence">TestSeq</param>
+      </generator>
+    </id>
+
+    <property name="ItemCode" column="ItemCode" not-null="true" />
+    <property name="ItemName" column="ItemName" not-null="true" />
+    <property name="ItemType" column="ItemType" not-null="true" />
+    <property name="Remark" column="Remark" not-null="false" />
+    <property name="ParentCode" column="ParentCode" not-null="true" />
+  </class>
+</hibernate-mapping>

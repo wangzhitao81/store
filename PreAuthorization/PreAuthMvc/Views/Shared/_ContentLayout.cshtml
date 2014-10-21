@@ -1,0 +1,27 @@
+﻿
+        @RenderBody()
+
+    @*<script type="text/javascript">
+        upms.installWebObj($("#_mainContent_"));
+        upms.WEBMAIN.initLayout();
+        upms.WEBMAIN.initMenu("/omer/page/subMain.jsp");
+        upms.WEBLANG.initLang($(".language"));
+        upms.installOverLay({// 安装ajax遮罩
+            type: "font",
+            opacity: 0.8,
+            fontcss: {
+                color: "black"
+            }
+        });
+        $("#editPwdFuncion").bind("click", function () {
+            upms.showOverLay();// 打开遮罩
+            upms.clearWebObj();// 清空webObj对象
+            var $newPgDiv = upms.createPageDiv();
+            var data = {};
+            $newPgDiv.load("/omer/SITEMNG/users!modifyUserPwdInit.action"
+                            , data,
+                            function () {
+                                upms.hideOverLay();
+                            });
+        });
+    </script>*@

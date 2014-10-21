@@ -1,0 +1,229 @@
+
+html {
+    background: none repeat scroll 0 0 #fff;
+    color: #333;
+}
+body {
+    font: 12px/1.5 STSong tahoma,arial,宋体;
+}
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td {
+    margin: 0;
+    padding: 0;
+}
+address, caption, cite, code, dfn, em, th, var, optgroup {
+    font-style: inherit;
+    font-weight: inherit;
+}
+em {
+    font-style: normal;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+caption {
+    text-align: left;
+}
+th {
+    text-align: center;
+}
+legend {
+    background: none repeat scroll 0 0 #fff;
+    color: #404040;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+fieldset {
+    border: 1px solid #ccc;
+    margin: 0 0 1.5em;
+    padding: 1.4em;
+}
+input, button, textarea, select, optgroup, option {
+    font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+}
+input, button, textarea, select {
+}
+input, select {
+    padding-left: 2px;
+    vertical-align: middle;
+}
+input::-moz-focus-inner {
+    border: 0 none;
+    margin: 0;
+    padding: 0;
+}
+select {
+    background: none repeat scroll 0 0 #fff;
+}
+textarea {
+    padding: 3px;
+}
+input {
+    outline: medium none;
+}
+q:before, q:after {
+    content: "";
+}
+pre, code, kbd, samp, tt {
+    font-family: "Courier New",Courier,monospace;
+}
+fieldset, img {
+    border: 0 none;
+}
+img {
+    vertical-align: middle;
+}
+a img {
+    border: 0 none;
+}
+li {
+    list-style: none outside none;
+}
+sup {
+    vertical-align: text-top;
+}
+sub {
+    vertical-align: text-bottom;
+}
+ins {
+    text-decoration: none;
+}
+del {
+    text-decoration: line-through;
+}
+small {
+    font-size: 100%;
+}
+abbr, acronym {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    border-color: -moz-use-text-color;
+    border-image: none;
+    border-style: none none dotted;
+    border-width: medium medium 1px;
+    cursor: help;
+    font-variant: normal;
+}
+hr {
+    background-color: #d1d7dc;
+    border: medium none;
+    color: #d1d7dc;
+    height: 1px;
+}
+a {
+    color: #4b7caf;
+    cursor: pointer;
+    text-decoration: none;
+}
+a, a:active, a:focus {
+    outline: medium none;
+}
+a:hover {
+    text-decoration: underline;
+}
+.cp {
+    cursor: pointer;
+}
+.cm {
+    cursor: move;
+}
+.ct {
+    cursor: text;
+}
+.ch {
+    cursor: help;
+}
+.fl {
+    float: left;
+}
+.fr {
+    float: right;
+}
+.oh {
+    overflow: hidden;
+}
+.oa {
+    overflow: auto;
+}
+.os {
+    overflow: scroll;
+}
+.dn {
+    display: none;
+}
+.db {
+    display: block;
+}
+.di {
+    display: inline;
+}
+.fb {
+    font-weight: bold;
+}
+.re {
+    position: relative;
+}
+.clear {
+    clear: both;
+}
+.clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    font-size: 0;
+    height: 0;
+    visibility: hidden;
+}
+.txtHide {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: keep-all;
+}
+.clearfix {
+}
+.clearfix {
+    display: block;
+}
+.pwdControl {
+    border: 1px solid #c4ccd3;
+    border-radius: 2px;
+    box-shadow: 1px 1px 1px #e3e3e3 inset;
+    float: left;
+    font-size: 14px;
+    height: 24px;
+    line-height: 24px;
+    margin-top: 5px;
+    padding: 2px;
+    width: 235px;
+}
+.loginPwdControl {
+    border: 1px solid #c4ccd3;
+    border-radius: 2px;
+    box-shadow: 1px 1px 1px #e3e3e3 inset;
+    float: left;
+    font-size: 14px;
+    height: 24px;
+    line-height: 24px;
+    padding: 2px;
+    width: 163px;
+}
+.modifyPwdControl {
+    border: 1px solid #c4ccd3;
+    border-radius: 2px;
+    box-shadow: 1px 1px 1px #e3e3e3 inset;
+    float: left;
+    font-size: 14px;
+    height: 24px;
+    line-height: 24px;
+    padding: 2px;
+    width: 180px;
+}

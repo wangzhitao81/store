@@ -1,0 +1,360 @@
+﻿@model CRModel.Models.OrderModel
+@using CRModel.Models;
+@{
+    ViewBag.Title = "NewOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ContractModel CurrentContract = ViewBag.UserContract;
+}
+<div class="jumbotron-header">
+    <span style="font-size:30px; color: #34A387">@Resources.Language.新增委托</span>
+</div>
+<div class="container body-content">
+    @using (Html.BeginForm("NewOrder", "Order", FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "orderform" }))
+    {
+        @Html.HiddenFor(m => m.HiddenDefaultLanguage)
+        @Html.HiddenFor(m => m.CustomerProfileNO)
+        @Html.HiddenFor(m => m.DeliverDate)
+        @Html.HiddenFor(m => m.Fee)
+        <div class="form-group">
+            <label for="CustomerReportNO" class="col-sm-2 control-label">客户报告编号</label>
+            <div class="col-sm-10">
+                <input type="text" name="CustomerReportNO" id="CustomerReportNO" class="form-control" placeholder="客户报告编号">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="RegisterNo" class="col-sm-2 control-label">注册号</label>
+            <div class="col-sm-10">
+                <input type="text" name="RegisterNo" id="RegisterNo" class="form-control" placeholder="注册号">
+            </div>
+        </div>
+        @*<div class="form-group">
+                <label for="EnterpriseSuppliedName" class="col-sm-2 control-label">企业提供名称</label>
+                <div class="col-sm-10">
+                    <input type="text" name="EnterpriseSuppliedName" id="EnterpriseSuppliedName" class="form-control" placeholder="企业提供名称">
+                </div>
+            </div>*@
+        <div class="form-group">
+            <label for="ENName" class="col-sm-2 control-label">企业名称</label>
+            <div class="col-sm-10">
+                @Html.TextBoxFor(m => m.ENName, new { @class = "form-control", placeholder = "企业名称" })
+                @Html.ValidationMessageFor(m => m.ENName, "请填写企业名称")
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="SuppliedAddress" class="col-sm-2 control-label">提供地址</label>
+            <div class="col-sm-10">
+                @Html.TextBoxFor(m => m.SuppliedAddress, new { @class = "form-control", placeholder = "提供地址" })
+                @Html.ValidationMessageFor(m => m.SuppliedAddress, "请填写提供地址")
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="NationCode" class="col-sm-2 control-label">国家</label>
+            @{
+        List<SelectListItem> items = new List<SelectListItem>();
+        items.Add(new SelectListItem() { Text = "", Value = "", Selected = true });
+        foreach (string temp in (IEnumerable<string>)ViewBag.NationCodeDic.Keys)
+        {
+            if (temp == "中国")
+            {
+                items.Add(new SelectListItem() { Text = temp, Value = ViewBag.NationCodeDic[temp], Selected = true });
+            }
+            else
+            {
+                items.Add(new SelectListItem() { Text = temp, Value = ViewBag.NationCodeDic[temp] });
+            }
+        }
+            }
+            <div class="col-sm-10">
+                @Html.DropDownListFor(m => m.NationCode, (IEnumerable<SelectListItem>)items, new { @class = "form-control", placeholder = "国家", onclick = "InitReportStatus();" })
+                @Html.ValidationMessageFor(m => m.NationCode, "请选择国家")
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">报告种类</label>
+            <div class="col-sm-10">
+                @foreach (var dic in ViewBag.ReportTypeDic)
+                {
+                    <label class="radio-inline">
+                        <input name="ReportType" type="radio" value="@dic.Code" onclick="SetReportTypeValue('@dic.Name');" />
+                        @dic.Name
+                    </label>
+                }
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">是否加急</label>
+            <div class="col-sm-10">
+                @foreach (var dic in ViewBag.ExpressTypeDic)
+                {
+                    <label class="radio-inline">
+                        <input name="ExpressType" type="radio" value="@dic.Code" displayname="@dic.Name" onclick="SetExpressTypeValue('@dic.Code');" />
+                        @dic.Name
+                    </label>
+                }
+            </div>
+        </div>
+        @*<div class="form-group">
+            <label class="col-sm-2 control-label">是否需要走访</label>
+            <div class="col-sm-10">
+                <label class="checkbox">
+                    @Html.CheckBoxFor(m => m.NeedInterview)
+                </label>
+            </div>
+        </div>*@
+        <div class="form-group">
+            <label class="col-sm-2 control-label">翻译语言</label>
+            <div class="col-sm-10">
+                @foreach (var dic in ViewBag.LanguageDic)
+                {
+                    <label class="checkbox-inline">
+                        <input name="TranslationLanguage" type="checkbox" value="@dic.Code" onclick="SetTranslationLanguage(this,'@dic.Name')" />
+                        @dic.Name
+                    </label>
+                }
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="Remarks" class="col-sm-2 control-label">附加信息</label>
+            <div class="col-sm-10">
+                @Html.TextAreaFor(m => m.Remarks, new { @class = "form-control", rows = "3" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-1">
+                <input type="button" onclick="SubmitOrderform();" class="btn btn-default" value="委托" />
+            </div>
+        </div>
+    }
+</div>
+<script type="text/javascript">
+    var LanguageShowList = [];
+    var LanguageShowValue = [];
+    var ReportViewType = "";
+    var UserContract = "";
+    var DeliverData = "";
+
+    $(document).ready(function () {
+        $.ajax({
+            url: '@Url.Action("GetUserContract", "Order")',
+            type: "POST",
+            dataType: "json",
+            async: false,
+            data: { username: $("#inputUserName").val() },
+            success: function (data) {
+                UserContract = data;
+            },
+            error: function (date) {
+                alert("获取当前用户合同失败，请联系管理员");
+                window.location.href = '@Url.Action("Index","Home")';
+            }
+        });
+        InitReportStatus(UserContract);
+    });
+
+    function GetDeliverDataandFee() {
+        $.ajax({
+            url: '@Url.Action("GetDataandFee", "Order")',
+            type: "GET",
+            dataType: "json",
+            cache: false,
+            async: false,
+            data: {
+                nationcode: $("#NationCode").val(),
+                expresstype: $("[name=ExpressType]").val(),
+                reporttype: $('input[type=radio]').serializeArray()[0].value,
+                selectedlang: LanguageShowValue.toString()
+            },
+            success: function (data) {
+                DeliverData = data;
+                $("#DeliverDate").val(data[0]);
+                $("#Fee").val(data[1]);
+                $("#spanDeliverDate_v").html(data[0]);
+                $("#spanFee_v").html(data[1]);
+            },
+            error: function (date) {
+                alert("获取当前用户合同失败，请联系管理员");
+                return false;
+            }
+        });
+    }
+
+    function InitReportStatus(contractdata) {
+        if (!contractdata) {
+            contractdata = UserContract;
+        }
+        var tempContractDetail = contractdata.ContractDetails.filter(function (index) {
+            return index.NationCode == $("#NationCode").val();
+        });
+        var defaultselectedtype = tempContractDetail[0].ReportType;
+        var defaultlanguage = tempContractDetail[0].DefaultLanguage;
+        DisableNotUseReportType(tempContractDetail);
+        $("#HiddenDefaultLanguage").val(defaultlanguage);
+        $("#CustomerProfileNO").val(UserContract.CustomerProfileNO);
+        $("#orderform").find('[name="ExpressType"][value="Common"]').click();
+        var str1 = "[name=\"TranslationLanguage\"][value=\"" + defaultlanguage + "\"]";
+        var str2 = "[name=\"ReportType\"][value=\"" + defaultselectedtype + "\"]";
+        $("#orderform").find(str1).click();
+        $("#orderform").find(str1).attr('disabled', true);
+        $("#orderform").find(str2).click();
+        //if ($.inArray(defaultlanguage, LanguageShowValue) == -1) {
+        //    LanguageShowList.push(defaultlanguage);
+        //    SetTranslationLanguage(this, defaultlanguage);
+        //}
+    }
+
+    function DisableNotUseReportType(usedContractDetails) {
+        var reporttype = [];
+        var reporttypeArray = "";
+        $(usedContractDetails).each(function (key, value) {
+            if ($.inArray(value.ReportType, reporttype) == -1) {
+                reporttype.push(value.ReportType);
+            }
+        });
+        var ss1 = "[name=\"ReportType\"][value=\"" + "CECR1" + "\"]";
+        var ss2 = "[name=\"ReportType\"][value=\"" + "CECR2" + "\"]";
+        var ss3 = "[name=\"ReportType\"][value=\"" + "CECR3" + "\"]";
+        var ss4 = "[name=\"ReportType\"][value=\"" + "CECR4" + "\"]";
+        var ss5 = "[name=\"ReportType\"][value=\"" + "CECR5" + "\"]";
+        $("#orderform").find(ss1).attr('disabled', true);
+        $("#orderform").find(ss2).attr('disabled', true);
+        $("#orderform").find(ss3).attr('disabled', true);
+        $("#orderform").find(ss4).attr('disabled', true);
+        $("#orderform").find(ss5).attr('disabled', true);
+        reporttypeArray = reporttype.toString().split(',');
+        $(reporttypeArray).each(function (key, value) {
+            var temp = "[name=\"ReportType\"][value=\"" + value + "\"]";
+            $("#orderform").find(temp).attr('disabled', false);
+        });
+    }
+
+    function SetReportTypeValue(value) {
+        ReportViewType = value;
+    }
+
+    function SetExpressTypeValue(value) {
+        $("[name=ExpressType]").val(value);
+    }
+
+    function SetTranslationLanguage(obj, value) {
+        if ($.inArray(value, LanguageShowList) == -1) {
+            LanguageShowList.push(value);
+        }
+        else {
+            LanguageShowList = $(LanguageShowList).removeItem(LanguageShowList, value);
+        }
+
+        if (obj.defaultValue) {
+            if ($.inArray(obj.defaultValue, LanguageShowValue) == -1) {
+                LanguageShowValue.push(obj.defaultValue);
+            }
+            else {
+                LanguageShowValue = $(LanguageShowValue).removeItem(LanguageShowValue, obj.defaultValue);
+            }
+        }
+    }
+
+    function SubmitOrderform() {
+        if ($("#orderform").valid()) {
+            CollectionData();
+            $("#MyPopUpModal").modal('toggle');
+        }
+    }
+
+    function CollectionData() {
+        $("#spanCustomerReportNO_v").html($("#CustomerReportNO").val());
+        $("#spanRegisterNo_v").html($("#RegisterNo").val());
+        //$("#spanEnterpriseSuppliedName_v").html($("#EnterpriseSuppliedName").val());
+        $("#spanENName_v").html($("#ENName").val());
+        $("#spanSuppliedAddress_v").html($("#SuppliedAddress").val());
+        $("#spanReportType_v").html(ReportViewType);
+        var expresstype = $("[name=ExpressType]").val();
+        switch (expresstype) {
+            case "Common":
+                expresstype = "普通件";
+                break;
+            case "Urgent":
+                expresstype = "加急件";
+                break;
+            case "Express":
+                expresstype = "特急件";
+                break;
+        }
+        $("#spanExpressType_v").html(expresstype.toString());
+        var interview = $("#NeedInterview").val();
+        if (interview == "True" || interview == "true" || interview == true) {
+            interview = "需要";
+        }
+        else {
+            interview = "不需要";
+        }
+        $("#spanNeedInterview_v").html(interview.toString());
+        $("#spanTranslationLanguage_v").html(LanguageShowList.toString());
+        $("#spanRemarks_v").html($("#Remarks").val());
+        $('[name=\"TranslationLanguage\"]').val(LanguageShowValue.toString());
+        GetDeliverDataandFee();
+    }
+</script>
+
+<div class="modal fade" id="MyPopUpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-4" id="spanCustomerReportNO">客户报告编号: </div>
+                    <div class="col-sm-8" id="spanCustomerReportNO_v"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4" id="spanRegisterNo">注册号: </div>
+                    <div class="col-sm-8" id="spanRegisterNo_v"></div>
+                </div>
+                @*<div class="row">
+                        <div class="col-sm-4" id="spanEnterpriseSuppliedName">企业提供名称: </div>
+                        <div class="col-sm-8" id="spanEnterpriseSuppliedName_v"></div>
+                    </div>*@
+                <div class="row">
+                    <div class="col-sm-4" id="spanENName">企业名称: </div>
+                    <div class="col-sm-8" id="spanENName_v"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4" id="spanSuppliedAddress">提供地址: </div>
+                    <div class="col-sm-8" id="spanSuppliedAddress_v"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4" id="spanReportType">报告种类: </div>
+                    <div class="col-sm-8" id="spanReportType_v"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4" id="spanExpressType">是否加急: </div>
+                    <div class="col-sm-8" id="spanExpressType_v"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4" id="spanNeedInterview">是否需要走访: </div>
+                    <div class="col-sm-8" id="spanNeedInterview_v"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4" id="spanTranslationLanguage">翻译语言: </div>
+                    <div class="col-sm-8" id="spanTranslationLanguage_v"></div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4" id="spanDeliverDate">计划交付日期: </div>
+                    <div class="col-sm-8" id="spanDeliverDate_v">2014-06-11</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4" id="spanFee">费用: </div>
+                    <div class="col-sm-8" id="spanFee_v">3000.00</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4" id="spanRemarks">附加信息: </div>
+                    <div class="col-sm-8" id="spanRemarks_v"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">返回</button>
+                <button type="button" onclick="$('#orderform').submit();" class="btn btn-primary">委托</button>
+            </div>
+        </div>
+    </div>
+</div>
