@@ -11,7 +11,12 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 
 public class LoginInfo implements Serializable {
-	  @NotNull
+	  /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2287235581635528637L;
+
+	@NotNull
 	  @NotEmpty
 	  private String username;
 
