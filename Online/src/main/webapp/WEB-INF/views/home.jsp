@@ -15,29 +15,38 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <!-- Le styles 
-    <link href="<c:url value="/resources/bootstrap/3.3.0/css/bootstrap.css" />" rel="stylesheet">
-    -->
+    <!-- Le styles--> 
+    <link href="<c:url value="/resources/bootstrap/3.3.1/css/bootstrap.css" />" rel="stylesheet">
+    <link href="<c:url value="/resources/bootstrap/3.3.1/css/bootstrap-theme.css" />" rel="stylesheet">
+    
 	<!-- Custom styles for this template -->
     <link href="<c:url value="/resources/style.css" />" rel="stylesheet">
-    <!-- 
-    <link href="../../resources/bootstrap-responsive.css" rel="stylesheet">
- 	-->
- 	
-    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-	
-	<!-- Optional theme -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
 	
 	<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 	<!-- Latest compiled and minified JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.js"></script>
-
+	<script src="<c:url value="/resources/bootstrap/3.3.1/js/bootstrap.js" />"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+    	$("#frmSignIn").submit(function(event){
+    	  /* Stop form from submitting normally */
+    	  event.preventDefault();
+    	  
+    	  /* Clear result div */
+    	  $("#resultDiv").html('');
+    	  
+    	  /* Get some values from elements on the page */
+    	  var values = $(this).serialize();
+    	  
+    	  /* Send the data using post and put the result in a div */
+    	  $.ajax({
+    		  url:"SignIn.do",
+    		  type:"post",
+    		  data:values,
+    		  
+    	  })
+    	});
+    });
+    </script>
     </head>
     <body>
 
@@ -51,17 +60,16 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="#">Project name</a>
-          <button name="btnAlert" id="btnAlert">Alert</button>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" role="form">
+          <form id="frmSignIn" class="navbar-form navbar-right" role="form">
             <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
+              <input id="iptEMail" type="text" placeholder="Email" class="form-control">
             </div>
             <div class="form-group">
               <input type="password" placeholder="Password" class="form-control">
             </div>
-            <button name="btnSign" id="btnSign" type="submit" class="btn btn-success">Sign in</button>
+            <button id="btnSign" type="submit" class="btn btn-success">Sign in</button>
           </form>
         </div><!--/.navbar-collapse -->
       </div>
@@ -113,12 +121,6 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug 
     <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
     -->
-    <script type="text/javascript">
-    $(document).ready(function(){
-    	$("btnAlert").bind("click",function(){
-    		alert("aaa");
-    		});
-    });
-    </script>
+
     </body>
 </html>
